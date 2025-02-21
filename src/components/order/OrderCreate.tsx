@@ -12,23 +12,32 @@ import Table from "../Table";
 interface OrderCreateProps {
   isOpen: boolean;
   onClose: VoidFunction;
+  refresh: VoidFunction
 }
 
-export default function OrderCreate({ isOpen, onClose }: OrderCreateProps) {
+export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreateProps) {
   const api = useApi();
   const [formData, setFormData] = useState({ variant_payload: [] });
   const [loading, setLoading] = useState<boolean>(false);
   const [isOpenQr, setOpenQr] = useState<boolean>(false);
-  
+  const [totalQTY, setTotalQTY] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const navigate = useNavigate();
 
-  const totalQTY = formData?.variant_payload.reduce((accumulator, variant) => {
-    return accumulator + (variant?.quantity || 0); // Ensure you add 0 if price is undefined
-  }, 0)
+  useEffect(() => {
+    const totalQty = formData.variant_payload.reduce((accumulator, variant) => {
+      return accumulator + (Number(variant?.quantity) || 0);
+    }, 0);
 
-  const totalPrice = formData?.variant_payload.reduce((accumulator, variant) => {
-    return accumulator + (variant?.price || 0); // Ensure you add 0 if price is undefined
-  }, 0)
+    const totalPrice = formData.variant_payload.reduce((accumulator, variant) => {
+      return accumulator + (Number(variant?.price) || 0);
+    }, 0);
+
+    setTotalQTY(totalQty);
+    setTotalPrice(totalPrice);
+  }, [formData.variant_payload]);
+
 
   const onChange = (e: any) => {
     const { name, value } = e.target;
@@ -43,6 +52,8 @@ export default function OrderCreate({ isOpen, onClose }: OrderCreateProps) {
     setLoading(true);
     api.createOrders(formData).then((response) => {
         setLoading(false);
+        onClose()
+        refresh()
         navigate(`/orders`);
       }).catch(() => {
         console.log("Error");
@@ -82,6 +93,7 @@ export default function OrderCreate({ isOpen, onClose }: OrderCreateProps) {
           total_qty: totalQTY
         };
       });
+      setOpenQr(false)
     }
   };
 
@@ -209,7 +221,7 @@ export default function OrderCreate({ isOpen, onClose }: OrderCreateProps) {
             className="flex gap-2 items-center duration-200"
             onClick={() => setLoading(true)}
           >
-            {loading ? <div className=" spinner"></div> : <div>Create</div>}
+            {loading ? <div className="spinner"></div> : <div>Create</div>}
           </Button>
         </div>
       </form>

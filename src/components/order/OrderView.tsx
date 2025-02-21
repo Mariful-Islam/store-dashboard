@@ -17,9 +17,8 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
     api
       .getOrderDetail(id)
       .then((response) => {
-        setInterval(()=>{
-          setOrder(response.data);
-        }, 2000)
+
+        setOrder(response.data);
         
       })
       .catch(() => console.log("Erorr"));

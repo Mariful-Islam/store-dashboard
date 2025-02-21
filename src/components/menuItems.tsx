@@ -3,6 +3,7 @@ import { AiOutlineProduct } from "react-icons/ai";
 import { BiPurchaseTagAlt } from "react-icons/bi";
 import { GoHome } from "react-icons/go";
 import { IoIosPeople } from "react-icons/io";
+import { IoQrCodeOutline } from "react-icons/io5";
 import { RiUserLine } from "react-icons/ri";
 
 
@@ -37,10 +38,15 @@ const useMenuItems = () => {
       url: "/customers",
       icon: <IoIosPeople className="w-6 h-6" />,
     },
-     {
+    {
       name: "Retailers",
       url: "/retailers",
       icon: <RiUserLine className="w-6 h-6"/>,
+    },
+    {
+      name: "Qr Code",
+      url: "/qr-code",
+      icon: <IoQrCodeOutline className="w-6 h-6"/>,
     },
   
   ]);

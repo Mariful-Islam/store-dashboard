@@ -3,17 +3,17 @@ import Table from "../components/Table";
 import { useApi } from "../api/api";
 import { CiEdit } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
-import ProductView from "../components/product/ProductView";
-import ProductEdit from "../components/product/ProductEdit";
 import Button from "../components/Button";
 import Paginator from "../components/Paginator";
+import { RetailerView } from "../components/retailer/RetailerView";
+import { RetailerEdit } from "../components/retailer/RetailerEdit";
 
 export default function Retailers() {
   const api = useApi();
   const [retailers, setRetailers] = useState<any>();
 
-  const [productView, setProductView] = useState<any>(null);
-  const [productEdit, setProductEdit] = useState<any>(null);
+  const [retailerView, setRetailerView] = useState<any>(null);
+  const [retailerEdit, setRetailerEdit] = useState<any>(null);
 
   const columns = [
     { label: "ID", accessor: "id" },
@@ -30,17 +30,17 @@ export default function Retailers() {
     {
       Label: "",
       accessor: "",
-      render: () => (
+      render: (item:any) => (
         <div className="flex justify-center items-center gap-2">
           <button
             className=" hover:text-blue-500"
-            onClick={() => setProductView("ygyug")}
+            onClick={() => setRetailerView(item?.id)}
           >
             <IoEyeOutline />
           </button>
           <button
             className=" hover:text-blue-500"
-            onClick={() => setProductEdit("ygyug")}
+            onClick={() => setRetailerEdit(item?.id)}
           >
             <CiEdit />
           </button>
@@ -73,16 +73,17 @@ export default function Retailers() {
       <Table columns={columns as any} data={retailers} />
       {retailers && <Paginator data={retailers}/>}
 
-      {productView && (
-        <ProductView
-          isOpen={productView ? true : false}
-          onClose={() => setProductView(null)}
+      {retailerView && (
+        <RetailerView
+          isOpen={retailerView ? true : false}
+          onClose={() => setRetailerView(null)}
+          id={retailerView}
         />
       )}
-      {productEdit && (
-        <ProductEdit
-          isOpen={productEdit ? true : false}
-          onClose={() => setProductEdit(null)}
+      {retailerEdit && (
+        <RetailerEdit
+          isOpen={retailerEdit ? true : false}
+          onClose={() => setRetailerView(null)}
         />
       )}
     </div>

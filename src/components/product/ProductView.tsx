@@ -52,6 +52,17 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
     }
   };
 
+    if(!product){
+      return (
+        <Drawer isOpen={isOpen} onClose={onClose} title="Order Details">
+          <div className="bg-white dark:bg-gray-800 h-screen flex justify-center items-center">
+            <div className="spinner"></div>
+          </div>
+        </Drawer>
+      )
+    }
+  
+
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title="Product">
       <div className="flex flex-col gap-3">

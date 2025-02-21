@@ -8,6 +8,7 @@ import { OrderView } from "../components/order/OrderView";
 import OrderCreate from "../components/order/OrderCreate";
 import moment from "moment";
 import Paginator from "../components/Paginator";
+import { useSearchParams } from "react-router-dom";
 
 export default function Orders() {
     const api = useApi();
@@ -15,7 +16,9 @@ export default function Orders() {
   
     const [orderView, setOrderView] = useState<any>(null);
     const [orderCreate, setOrderCreate] = useState<any>(null);
-  
+    const [searchParams] = useSearchParams()
+
+
     const columns = [
       { label: "ID", accessor: "id", render: (item:any)=>(
         <div className="text-sm text-gray-400">
@@ -29,6 +32,12 @@ export default function Orders() {
       { label: "Total price", accessor: "total_price", render: (item:any)=>(
         <div>
           ${item.total_price}
+        </div>
+      ) },
+
+      { label: "Total Quantity", accessor: "total_qty", render: (item:any)=>(
+        <div>
+          {item.total_qty}
         </div>
       ) },
      
@@ -55,9 +64,9 @@ export default function Orders() {
       },
     ];
   
-    const fetchOrders = () => {
+    const fetchOrders = (searchParams?:any) => {
       api
-        .getOrders()
+        .getOrders(searchParams)
         .then((response) => { 
           setOrders(response.data);
         })
@@ -65,8 +74,8 @@ export default function Orders() {
     };
   
     useEffect(() => {
-      fetchOrders();
-    }, []);
+      fetchOrders(searchParams);
+    }, [searchParams]);
 
   return (
     <div>
@@ -88,6 +97,7 @@ export default function Orders() {
         <OrderCreate
           isOpen={orderCreate ? true : false}
           onClose={() => setOrderCreate(null)}
+          refresh={fetchOrders}
         />
       )}
     </div>
