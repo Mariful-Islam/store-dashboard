@@ -4,24 +4,26 @@ import Drawer from "../Drawer";
 import Table from "../Table";
 import { OrderView } from "../order/OrderView";
 import { IoEyeOutline } from "react-icons/io5";
+import { RetailerEdit } from "./RetailerEdit";
 
 interface CustomerViewProps {
   isOpen: boolean;
   onClose: VoidFunction;
   id: number;
+  refresh: VoidFunction;
 }
 
-export function RetailerView({ isOpen, onClose, id }: CustomerViewProps) {
+export function RetailerView({ isOpen, onClose, id, refresh }: CustomerViewProps) {
   const api = useApi();
-  const [retailer, setRetailer] = useState<any>();
+  const [retailer, setRetailer] = useState<any>(null);
   const [orderView, setOrderView] = useState<any>(null);
+  const [retailerEdit, setRetailerEdit] = useState<any>(null);
 
   const fetchRetailer = () => {
     api
       .getRetailerDetail(id)
       .then((response) => {
         setRetailer(response.data);
-
       })
       .catch(() => console.log("Erorr"));
   };
@@ -72,33 +74,58 @@ export function RetailerView({ isOpen, onClose, id }: CustomerViewProps) {
     <Drawer isOpen={isOpen} onClose={onClose} title="Retailer Detail">
       <div className="bg-white dark:bg-gray-800 text-slate-800 dark:text-slate-200">
         <div className="border border-slate-300 dark:border-slate-700 p-4 rounded-md mb-4">
-          <div className="flex gap-2">
-            <div>ID: </div>
-            <div>{retailer?.id}</div>
+          <div className="flex justify-end">
+            <button className="text-blue-500 cursor-pointer hover:underline" onClick={() => setRetailerEdit(retailer)}>
+              Edit
+            </button>
           </div>
-          <div className="flex gap-2">
-            <div>Name: </div>
-            <div>
-              {retailer?.first_name} {retailer?.last_name}
+          <div>
+            <div className="flex gap-2">
+              <div>ID: </div>
+              <div>{retailer?.id}</div>
             </div>
-          </div>
-          <div className="flex gap-2">
-            <div>UserName: </div>
-            <div> {retailer?.username}</div>
-          </div>
-          <div className="flex gap-2">
-            <div>Phone: </div>
-            <div>{retailer?.phone}</div>
-          </div>
-          <div className="flex gap-2">
-            <div>Email: </div>
-            <div>{retailer?.email}</div>
+            <div className="flex gap-2">
+              <div>Name: </div>
+              <div>
+                {retailer?.first_name} {retailer?.last_name}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <div>UserName: </div>
+              <div> {retailer?.username}</div>
+            </div>
+            <div className="flex gap-2">
+              <div>Phone: </div>
+              <div>{retailer?.phone}</div>
+            </div>
+            <div className="flex gap-2">
+              <div>Email: </div>
+              <div>{retailer?.email}</div>
+            </div>
           </div>
         </div>
 
-        <Table columns={columns} data={retailer?.orders} />
+        { retailer?.orders?.length !==0 && <Table columns={columns} data={retailer?.orders} /> }
 
-        {orderView && <OrderView isOpen={orderView ? true : false} onClose={()=>setOrderView(null)} id={orderView} /> }
+        {orderView && (
+          <OrderView
+            isOpen={orderView ? true : false}
+            onClose={() => setOrderView(null)}
+            id={orderView}
+          />
+        )}
+
+        {retailer && (
+          <RetailerEdit
+            isOpen={retailerEdit ? true : false}
+            onClose={() => setRetailerEdit(null)}
+            data={retailerEdit}
+            refresh={()=>{
+              fetchRetailer()
+              refresh()
+            }}
+          />
+        )}
       </div>
     </Drawer>
   );

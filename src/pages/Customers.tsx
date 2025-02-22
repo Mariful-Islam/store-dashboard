@@ -3,11 +3,11 @@ import Table from "../components/Table";
 import { useApi } from "../api/api";
 import { CiEdit } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
-import ProductView from "../components/product/ProductView";
 import ProductEdit from "../components/product/ProductEdit";
 import Button from "../components/Button";
 import CustomerCreate from "../components/customer/CustomerCreate";
 import Paginator from "../components/Paginator";
+import { CustomerView } from "../components/customer/CustomerView";
 
 export default function Customers() {
   const api = useApi();
@@ -29,19 +29,13 @@ export default function Customers() {
     {
       Label: "",
       accessor: "",
-      render: () => (
+      render: (item:any) => (
         <div className="flex justify-center items-center gap-2">
           <button
             className=" hover:text-blue-500"
-            onClick={() => setCustomerView("ygyug")}
+            onClick={() => setCustomerView(item?.id)}
           >
             <IoEyeOutline />
-          </button>
-          <button
-            className=" hover:text-blue-500"
-            onClick={() => setCustomerEdit("ygyug")}
-          >
-            <CiEdit />
           </button>
         </div>
       ),
@@ -74,9 +68,11 @@ export default function Customers() {
       {customers && <Paginator data={customers}/>}
 
       {customerView && (
-        <ProductView
+        <CustomerView
           isOpen={customerView ? true : false}
           onClose={() => setCustomerView(null)}
+          id={customerView}
+          refresh={fetchCustomers}
         />
       )}
       {customerEdit && (
@@ -89,6 +85,7 @@ export default function Customers() {
         <CustomerCreate
           isOpen={customerCreate}
           onClose={()=>setCustomerCreate(false)}
+          refresh={fetchCustomers}
         />
       )}
     </div>

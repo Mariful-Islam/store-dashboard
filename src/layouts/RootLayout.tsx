@@ -12,12 +12,12 @@ export default function RootLayout({
     const {openHeaderSidebar, toggleHeaderSidebar} = useContext(GlobalContext)
   return (
     <div>
-      <div className="flex gap-0 w-full bg-white dark:bg-gray-800 text-black dark:text-white">
+      <div className="flex gap-0 w-full text-black dark:text-white">
         <Sidebar />
         <div className="w-full">
           <Header />
           <div
-            className={`bg-slate-50 dark:bg-slate-800 p-6 h-screen overflow-auto ${openHeaderSidebar ? 'ml-0 mh:ml-[250px] blur-md mh:blur-none' : 'ml-0 mh:ml-12'} duration-200`}
+            className={` p-6 overflow-auto ${openHeaderSidebar ? 'ml-0 mh:ml-[250px] blur-md mh:blur-none' : 'ml-0 mh:ml-12'} duration-200`}
           >
             {children}
             <Outlet/>

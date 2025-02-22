@@ -15,7 +15,6 @@ export default function ProductCreate({ isOpen, onClose }: ProductCreateProps) {
   const [formData, setFormData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
 
-
   const navigate = useNavigate();
 
   const onChange = (e: any) => {
@@ -33,6 +32,7 @@ export default function ProductCreate({ isOpen, onClose }: ProductCreateProps) {
       .createProduct(formData)
       .then((response) => {
         setLoading(false);
+        onClose()
         navigate(`/`);
       })
       .catch(() => {
@@ -114,7 +114,7 @@ export default function ProductCreate({ isOpen, onClose }: ProductCreateProps) {
             Cancel
           </Button>
 
-          <Button type="Normal" submit className="flex gap-2 items-center duration-200" onClick={()=>setLoading1(true)}>
+          <Button type="Normal" submit className="flex gap-2 items-center duration-200" onClick={()=>setLoading(true)}>
 
             {loading ? <div className=" spinner"></div> : <div>Create</div> }
           </Button>

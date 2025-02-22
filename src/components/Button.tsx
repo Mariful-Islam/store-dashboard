@@ -4,7 +4,7 @@ interface OutlineButtonProps {
   children: React.ReactNode;
   type: "Outline" | "Normal" | "Danger" | "DangerOutline" | "Warning";
   submit?: boolean;
-  onClick?: VoidFunction;
+  onClick?: (e:any) => void;
   className?: string;
 }
 

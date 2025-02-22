@@ -33,7 +33,7 @@ export default function QrCode() {
 
       <div className="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 gap-4" ref={contentRef} >
         {variants?.results?.map((variant:any, index: number) => (
-          <div className=" border border-slate-200 dark:border-slate-600 rounded-md bg-white dark:bg-slate-900">
+          <div key={index} className=" border border-slate-200 dark:border-slate-600 rounded-md bg-white dark:bg-slate-900">
             <div className="bg-white p-3 rounded-t-md">
               <QRCodeSVG
                 value={JSON.stringify({

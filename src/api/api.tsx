@@ -11,11 +11,15 @@ export const useApi = () => {
         
         getCustomers: () => interceptor.get(`${API_URL}/store/user/api/customers/`),
         createCustomers: (data:any) => interceptor.post(`${API_URL}/store/user/api/customers/`, data),
-        
+        getCustomerDetail: (id:number) => interceptor.get(`${API_URL}/store/user/api/customers/${id}/`),
+        editCustomer: (id:number, data:any) => interceptor.put(`${API_URL}/store/user/api/customers/${id}/`, data),
+
         getRetailers: () => interceptor.get(`${API_URL}/store/user/api/retailers/`),
         createRetailers: (data:any) => interceptor.post(`${API_URL}/store/user/api/retailers/`, data),
         getRetailerDetail: (id: number) => interceptor.get(`${API_URL}/store/user/api/retailers/${id}/`),
-        
+        editRetailer: (id:number, data:any) => interceptor.put(`${API_URL}/store/user/api/retailers/${id}/`, data),
+
+
         getOrders: (params={}) => interceptor.get(`${API_URL}/store/order/api/orders/`, {params: params}),
         createOrders: (data:any) => interceptor.post(`${API_URL}/store/order/api/orders/`, data),
         getOrderDetail: (id:number) => interceptor.get(`${API_URL}/store/order/api/orders/${id}/`),
