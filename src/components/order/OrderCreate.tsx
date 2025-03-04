@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Modal from "../Modal";
-import Button from "../Button";
 import { useApi } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import { RxCross1 } from "react-icons/rx";
 import Form from "../Form";
 import QRScanner from "../QRCodeScanner";
 import { MdQrCodeScanner } from "react-icons/md";
 import Table from "../Table";
+import PaymentForm from "./PaymentForm";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/rootReducers";
+import { fetchProducts } from "../../redux/productsSlice";
 
 interface OrderCreateProps {
   isOpen: boolean;
@@ -17,13 +19,24 @@ interface OrderCreateProps {
 
 export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreateProps) {
   const api = useApi();
-  const [formData, setFormData] = useState({ variant_payload: [] });
+  const dispatch = useDispatch()
+  const [formData, setFormData] = useState<any>({ variant_payload: [] });
   const [loading, setLoading] = useState<boolean>(false);
   const [isOpenQr, setOpenQr] = useState<boolean>(false);
+  const [isPaymentOpen, setIsPaymentOpen] = useState<boolean>(false)
+
+  const products = useSelector((state:RootState)=>state.products.results)
+
   const [totalQTY, setTotalQTY] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
   const navigate = useNavigate();
+
+
+  useEffect(()=>{
+    dispatch(fetchProducts() as any)
+  }, [dispatch])
+
 
   useEffect(() => {
     const totalQty = formData.variant_payload.reduce((accumulator, variant) => {
@@ -39,14 +52,6 @@ export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreatePro
   }, [formData.variant_payload]);
 
 
-  const onChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prev: any) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -55,10 +60,13 @@ export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreatePro
         onClose()
         refresh()
         navigate(`/orders`);
+        return "success"
       }).catch(() => {
         console.log("Error");
         setLoading(false);
+        return "failed"
       });
+    return ""
   };
 
 
@@ -97,7 +105,6 @@ export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreatePro
     }
   };
 
-  console.log(formData);
 
   const qrScanner = isOpen ? <QRScanner onScan={onScan} /> : null;
 
@@ -143,17 +150,19 @@ export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreatePro
     },
   ];
 
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex justify-between items-center font-medium pb-2 mb-4 border-slate-300 border-b">
-        <h1>Order Create</h1>
-        <RxCross1
-          onClick={onClose}
-          className="cursor-pointer w-6 h-6 p-1 hover:bg-slate-400 dark:hover:bg-slate-600 rounded-full"
-        />
-      </div>
 
-      <form className="flex flex-col gap-4" onSubmit={onSubmit}>
+  const fields = [
+    `variant_payload*select`,
+    'customer',
+
+  ]
+
+  console.log(products)
+  
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose} title="Create Order">
+
         <div
           className="h-[150px] flex justify-center items-center hover:text-blue-500"
           onClick={openHello}
@@ -181,54 +190,22 @@ export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreatePro
           </div>
         )}
 
-        <div className="flex flex-col gap-1">
-          <label htmlFor="customer_name" className="text-sm font-medium">
-            Customer
-          </label>
-          <input
-            id="customer_name"
-            type="text"
-            name="customer_name"
-            placeholder="Type your customer name.."
-            value={formData?.customer_name || ""}
-            onChange={onChange}
-            className="block w-full rounded-md  px-3 py-1.5 text-base text-slate-900 dark:text-slate-50 outline-1 -outline-offset-1 outline-slate-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6"
-          />
-        </div>
-        <div className="flex flex-col gap-1">
-          <label htmlFor="retailer_name" className="text-sm font-medium">
-            Retailer
-          </label>
-          <input
-            id="retailer_name"
-            type="text"
-            name="retailer_name"
-            placeholder="Type retailer name.."
-            value={formData?.retailer_name || ""}
-            onChange={onChange}
-            className="block w-full rounded-md  px-3 py-1.5 text-base text-slate-900 dark:text-slate-50 outline-1 -outline-offset-1 outline-slate-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6"
-          />
-        </div>
 
-        <div className="flex gap-3 justify-end">
-          <Button type="DangerOutline" onClick={onClose}>
-            Cancel
-          </Button>
+        <Form 
+          fields={fields} 
+          onChangeFields={(data)=>setFormData((prev:any)=>({...prev, ...data}))} 
+          onClose={onClose} 
+          onSubmit={onSubmit}
+          submitBtnName="Create"
+        />
 
-          <Button
-            type="Normal"
-            submit
-            className="flex gap-2 items-center duration-200"
-            onClick={() => setLoading(true)}
-          >
-            {loading ? <div className="spinner"></div> : <div>Create</div>}
-          </Button>
-        </div>
-      </form>
+
 
       <Modal isOpen={isOpenQr} onClose={closeModal}>
         <div>{qrScanner}</div>
       </Modal>
+
+      {isPaymentOpen && <PaymentForm isOpen={isPaymentOpen} onClose={()=>setIsPaymentOpen(false)} orderId={2}/> }
     </Modal>
   );
 }

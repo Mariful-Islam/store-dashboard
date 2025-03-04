@@ -24,7 +24,11 @@ export const useApi = () => {
         createOrders: (data:any) => interceptor.post(`${API_URL}/store/order/api/orders/`, data),
         getOrderDetail: (id:number) => interceptor.get(`${API_URL}/store/order/api/orders/${id}/`),
 
-        getVariants: () => interceptor.get(`${API_URL}/store/product/api/product-variants/`)
+        getVariants: () => interceptor.get(`${API_URL}/store/product/api/product-variants/`),
+        createVariant: (data:any) => interceptor.post(`${API_URL}/store/product/api/product-variants/`, data),
+        deleteVariant: (id:number) => interceptor.delete(`${API_URL}/store/product/api/product-variants/${id}/`),
+
+        makePayment: (data:any) => interceptor.post(`${API_URL}/store/payment/api/payments/`, data),
 
     }
     return api

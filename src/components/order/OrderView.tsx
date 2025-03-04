@@ -5,6 +5,7 @@ import moment from "moment";
 import { FiPrinter } from "react-icons/fi";
 import Invoice from "./Invoice";
 import { useReactToPrint } from "react-to-print";
+import PaymentForm from "./PaymentForm";
 
 interface ProductViewProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ interface ProductViewProps {
 export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
   const api = useApi();
   const [order, setOrder] = useState<any>();
-
+  const [paymentModal, setPaymentModal] = useState<boolean>(false)
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
 
@@ -57,7 +58,50 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
           <FiPrinter className=" group-hover:text-blue-500 duration-200 w-5 h-5 " />
         </div>
 
-        <h1 className="font-black text-slate-500 dark:text-slate-300">Order info</h1>
+        {/* Payments */}
+        <div className="flex flex-row gap-4 items-center mb-4">
+          <h1 className="font-black text-slate-500 dark:text-slate-300">Payment</h1> 
+          <div>
+            {order?.payment_status ? 
+              <div className="text-green-500 bg-green-100 dark:bg-green-900 rounded-md px-4 py-1 w-fit">Clear</div> 
+              : 
+              <div className="text-red-500 bg-red-100 dark:bg-red-900 rounded-md px-4 py-1 w-fi">Pending</div>
+            }
+          </div>
+        </div>
+        <div>
+          <div className="flex justify-between items-center">
+            <h1 className="font-black text-slate-500 dark:text-slate-300">Payment history</h1> 
+            <button 
+              className="border border-blue-500 px-4 py-1 rounded-md text-blue-500 hover:bg-gray-200 dark:hover:bg-gray-600"
+              onClick={()=>setPaymentModal(true)}
+            >
+              + Add Payment
+            </button>
+          </div>
+          <div>
+            {order?.payments?.map((pay:any, index:number)=>(
+              <div className="border border-slate-300 dark:border-slate-600 p-4 rounded-md mt-2" key={index}>
+                <div className="flex gap-2">
+                  <div>Amount: </div>
+                  <div> {pay?.amount}</div>
+                </div>
+                <div className="flex gap-2">
+                  <div>Amount: </div>
+                  <div> {pay?.payment_method}</div>
+                </div>
+                <div className="flex gap-2">
+                  <div>Payment date: </div>
+                  <div>{moment(pay?.payment_date).format('HH:MM A DD MMMM YYYY')}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+
+
+        <h1 className="font-black text-slate-500 dark:text-slate-300 mt-4">Order info</h1>
         <div className="border border-slate-300 dark:border-slate-600 p-4 rounded-md mt-2">
           <div className="flex gap-2">
             <div>ID: </div>
@@ -156,6 +200,9 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
         </div>
 
         {order && <Invoice data={order} ref={contentRef}/> }
+        {paymentModal && <PaymentForm isOpen={paymentModal} onClose={()=>setPaymentModal(false)} orderId={id}/>}
+
+        {}
 
       </div>
     </Drawer>

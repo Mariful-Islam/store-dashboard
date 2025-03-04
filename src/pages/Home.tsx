@@ -1,3 +1,6 @@
+import { useEffect } from "react";
+import { API_URL } from "../api/interceptor";
+
 export default function Home() {
   const data = [
     {
@@ -20,6 +23,25 @@ export default function Home() {
       },
     },
   ];
+
+  useEffect(()=>{
+    const ws = new WebSocket(`${API_URL}/ws/dashboard/`)
+
+    ws.onopen = ()=> {
+      ws.send(JSON.stringify({'value': 'hello how are you'}))
+    }
+
+    ws.onmessage = (event)=> {
+
+      const data = JSON.parse(event.data);
+    }
+
+    ws.onclose = ()=> {
+      console.log('Disconnected.........')
+    }
+    
+  }, [])
+
   return (
     <div className="">
       <div className="grid grid-cols-3 gap-3">

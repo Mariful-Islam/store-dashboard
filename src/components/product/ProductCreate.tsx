@@ -45,13 +45,8 @@ export default function ProductCreate({ isOpen, onClose }: ProductCreateProps) {
   console.log(formData, "=======");
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex justify-between items-center font-medium pb-2 mb-4 border-slate-300 border-b">
-          <h1>
-            Product Create
-          </h1>
-          <RxCross1 onClick={onClose} className="cursor-pointer w-6 h-6 p-1 hover:bg-slate-200 dark:hover:bg-slate-600 rounded-full" />
-      </div>
+    <Modal isOpen={isOpen} onClose={onClose} title="Create product">
+
       <form className="flex flex-col gap-4" onSubmit={onSubmit}>
         <div className="flex flex-col gap-1">
           <label htmlFor="name" className="text-sm font-medium">

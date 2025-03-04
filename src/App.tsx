@@ -4,11 +4,17 @@ import GlobalProvider from "./contexts/GlobalContext";
 import { RootLayout } from "./layouts";
 import StoreSettings from "./pages/StoreSettings";
 import QrCode from "./pages/QrCode";
+import { ToastProvider } from "./contexts/Notification";
+import {Provider} from "react-redux"
+import store from "./store";
+
 
 function App() {
   return (
     <BrowserRouter>
+      <Provider store={store}>
       <GlobalProvider>
+        <ToastProvider>
         <Routes>
           <Route element={<RootLayout />}>
             <Route path="/" element={<Home />} />
@@ -21,7 +27,9 @@ function App() {
             <Route path="/store-settings" element={<StoreSettings/>} />
           </Route>
         </Routes>
+        </ToastProvider>
       </GlobalProvider>
+      </Provider>
     </BrowserRouter>
   );
 }

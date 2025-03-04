@@ -7,6 +7,10 @@ import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { IoArrowDown } from "react-icons/io5";
+import Button from "../Button";
+import VariantForm from "./VariantForm";
+import { MdDelete } from "react-icons/md";
+import { useToast } from "../../contexts/Notification";
 
 interface ProductViewProps {
   isOpen: boolean;
@@ -17,8 +21,10 @@ interface ProductViewProps {
 function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
   const api = useApi();
   const [product, setProduct] = useState<any>();
+  const [variantForm, setVariantForm] = useState<boolean>(false)
+  const {addToast} = useToast()
 
-  const fetchProducts = () => {
+  const fetchProductDetail = () => {
     api
       .getProductDetail(slug)
       .then((response) => {
@@ -29,7 +35,7 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
 
   useEffect(() => {
     if (slug) {
-      fetchProducts();
+      fetchProductDetail();
     }
   }, [slug]);
 
@@ -52,16 +58,22 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
     }
   };
 
-    if(!product){
-      return (
-        <Drawer isOpen={isOpen} onClose={onClose} title="Order Details">
-          <div className="bg-white dark:bg-gray-800 h-screen flex justify-center items-center">
-            <div className="spinner"></div>
-          </div>
-        </Drawer>
-      )
-    }
-  
+  if(!product){
+    return (
+      <Drawer isOpen={isOpen} onClose={onClose} title="Order Details">
+        <div className="bg-white dark:bg-gray-800 h-screen flex justify-center items-center">
+          <div className="spinner"></div>
+        </div>
+      </Drawer>
+    )
+  }
+
+  const handleDeleteVariant = (id: number) => {
+    api.deleteVariant(id).then(()=>{
+      addToast("Variant successfully deleted !", "success")
+      fetchProductDetail()
+    }).catch(()=>addToast("Variant failed to delete !", "error"))
+  }
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title="Product">
@@ -80,7 +92,12 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
             {product?.category}
           </div>
         </div>
-        <h1 className="text-slate-800 dark:text-slate-50 font-bold">Variants</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-slate-800 dark:text-slate-50 font-bold">Variants</h1>
+          <Button onClick={()=>setVariantForm(true)} type="Outline">
+            + {" "} Add variant
+          </Button>
+        </div>
         <div className="border border-slate-300 dark:border-slate-600 rounded-md p-4 text-slate-800 dark:text-slate-50 flex flex-col gap-8">
          
           {product?.variants.map((variant: any, index: number) => (
@@ -137,7 +154,8 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
                   <div>svg</div>
                 </div>
               </div>
-              <div>
+              <div className="flex flex-col gap-6">
+                <MdDelete className="text-red-500 h-6 w-6" onClick={()=>handleDeleteVariant(variant?.id)}/>
                 <LuPrinter
                   className="hover:text-blue-500 duration-200 h-6 w-6"
                   onClick={() => reactToPrintFn()}
@@ -146,6 +164,15 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
             </div>
           ))}
         </div>
+
+        {variantForm && 
+          <VariantForm 
+            isOpen={variantForm} 
+            onClose={()=>setVariantForm(false)} 
+            productId={product?.id}
+            refresh={fetchProductDetail}
+          />
+        }
       </div>
     </Drawer>
   );
