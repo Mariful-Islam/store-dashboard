@@ -26,18 +26,44 @@ export default function Orders() {
         </div>
       ) },
       // { label: "Update", accessor: "updated_at" },
-      { label: "Customer Name", accessor: "customer_name" },
-      { label: "Retailer Name", accessor: "retailer_name" },
+      { label: "Customer", accessor: "customer_name" },
+      { label: "Retailer", accessor: "retailer_name" },
 
-      { label: "Total price", accessor: "total_price", render: (item:any)=>(
+      { label: "Price", accessor: "total_price", render: (item:any)=>(
         <div>
           ${item.total_price}
         </div>
       ) },
 
-      { label: "Total Quantity", accessor: "total_qty", render: (item:any)=>(
+      { label: "Quantity", accessor: "total_qty", render: (item:any)=>(
         <div>
           {item.total_qty}
+        </div>
+      ) },
+
+      { label: "Status", accessor: "payment_status", render: (item:any)=>(
+        <div>
+          {item?.payment_status == 0.0 ?
+              <div className="text-green-500 bg-green-100 dark:bg-green-900 rounded-md px-4 py-1 w-fit font-medium border border-green-500">Clear</div> 
+              :
+                <div 
+                  className=""
+                >
+                  {
+                    item?.payment_status > 0 ? 
+                      <div 
+                        className="flex flex-row gap-2"
+                      >
+                        <div className="bg-green-500 text-white px-4 py-1 rounded-md font-medium">{item?.payment_status}</div>
+                      </div> 
+                      : 
+                      <div className="flex flex-row gap-2">
+                      
+                        <div className="bg-red-500 text-white px-4 py-1 rounded-md font-medium">{item?.payment_status}</div>
+                      </div>
+                  }
+                </div>
+            }
         </div>
       ) },
      

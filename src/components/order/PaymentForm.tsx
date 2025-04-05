@@ -8,21 +8,24 @@ interface PaymentFormProps {
   isOpen: boolean;
   onClose: VoidFunction;
   orderId: number;
+  refresh: VoidFunction;
 }
 
-function PaymentForm({ isOpen, onClose, orderId }: PaymentFormProps) {
+function PaymentForm({ isOpen, onClose, orderId, refresh }: PaymentFormProps) {
   const api = useApi()
   const [formData, setFormData] = useState({order: orderId});
 
   const {addToast} = useToast()
 
-  const fields = ["amount", "payment_method*select>Cash|Bank Transfer|Paypal|Debit Card|Credit Card"];
+  const fields = ["amount", "payment_method*select>Cash,Bank Transfer,Paypal,Debit Card,Credit Card"];
 
   const handlePay = (e: React.FormEvent) => {
     e.preventDefault();
 
     api.makePayment(formData).then(()=>{
       addToast("Order payment successful.", "success")
+      onClose()
+      refresh()
       return "success"
     }).catch(()=>{
       addToast("Payment Failed !!", "error")
@@ -33,13 +36,13 @@ function PaymentForm({ isOpen, onClose, orderId }: PaymentFormProps) {
 
   };
 
-
+  console.log(formData)
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Payment">
 
       <Form
         fields={fields}
-        onChangeFields={(data) => setFormData(data)}
+        onChangeFields={(data) => setFormData((prev)=>({...prev, ...data}))}
         onClose={onClose}
         onSubmit={handlePay}
         submitBtnName="Pay"

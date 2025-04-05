@@ -23,7 +23,7 @@ const ThemeToggle: React.FC = () => {
       onClick={toggleTheme}
       className="p-2 rounded-full text-gray-500 dark:text-gray-300 hover:bg-gray-200 hover:dark:bg-gray-700 duration-200"
     >
-      {theme === 'light' ? <IoSunnyOutline className='text-black w-4 h-4'/> : <MdOutlineNightlight className='text-white w-4 h-4'/> }
+      {theme === 'light' ? <IoSunnyOutline className='text-black w-5 h-5'/> : <MdOutlineNightlight className='text-white w-4 h-4'/> }
     </button>
   );
 };

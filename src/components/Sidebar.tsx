@@ -1,5 +1,5 @@
 
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import useMenuItems from "./menuItems";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 
@@ -15,7 +15,7 @@ function Sidebar() {
 
 
   return (
-    <div className=" fixed z-50 h-screen">
+    <div className=" fixed z-[60] h-screen">
       <div
         className={`p-2 border-r border-slate-200 dark:border-slate-600 absolute  h-screen shadow-md mh:shadow-none  ${
           openHeaderSidebar
@@ -39,7 +39,7 @@ function Sidebar() {
         </div>
         <div className="mt-4">
           <nav className="">
-            <ul className="list-none flex flex-col gap-3">
+            <ul className="list-none flex flex-col gap-0">
               {menuItems.map((item, index) => (
                 <li key={index} className=" relative">
                   <Link
@@ -62,7 +62,7 @@ function Sidebar() {
             ? "w-[233px] bg-white dark:bg-gray-800 "
             : "w-0 overflow-hidden opacity-0 mh:opacity-100 mh:overflow-visible mh:w-[40px] bg-white dark:bg-gray-800 z-50"}`}>
         <Link
-          to={`/store-settings`}
+          to={`/store-settings/profile`}
           className={`flex items-center gap-2 ${
             openHeaderSidebar ? "px-4" : " justify-center px-1"
           } ${

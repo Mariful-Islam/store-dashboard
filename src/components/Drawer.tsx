@@ -17,7 +17,7 @@ export interface ModalProps {
 
 export default function Drawer({ isOpen, onClose, title='', children }: ModalProps) {
   return (
-    <Dialog open={isOpen} onClose={onClose} className="relative z-50 ">
+    <Dialog open={isOpen} onClose={onClose} className="relative z-[70] ">
       <DialogBackdrop
         transition
         className="fixed inset-0 bg-gray-500/75 transition-opacity duration-500 ease-in-out data-closed:opacity-0"

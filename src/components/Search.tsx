@@ -8,8 +8,8 @@ interface SearchProps {
 
 export default function Search({isOpen, onClose}: SearchProps) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-        Search
+    <Modal isOpen={isOpen} onClose={onClose} title='Search'>
+        sdfvdvdfvdf
     </Modal>
   )
 }

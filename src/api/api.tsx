@@ -5,6 +5,10 @@ export const useApi = () => {
     const interceptor = useInterceptor()
 
     const api = {
+        
+        getDashboard: (params={}) => interceptor.get(`${API_URL}/store/dashboard/api/dashboard/`, {params: params}),
+        
+        
         getProducts: (params={}) => interceptor.get(`${API_URL}/store/product/api/products/`, {params: params}),
         createProduct: (data:any) => interceptor.post(`${API_URL}/store/product/api/products/`, data),
         getProductDetail: (slug:any) => interceptor.get(`${API_URL}/store/product/api/products/${slug}/`),
@@ -29,6 +33,7 @@ export const useApi = () => {
         deleteVariant: (id:number) => interceptor.delete(`${API_URL}/store/product/api/product-variants/${id}/`),
 
         makePayment: (data:any) => interceptor.post(`${API_URL}/store/payment/api/payments/`, data),
+        
 
     }
     return api

@@ -19,7 +19,7 @@ export default function VariantForm({isOpen, onClose, productId,  refresh}: Vari
 
     const fields = [
         'name',
-        'stock',
+        'stock*number',
         'price*number',
 
     ]
@@ -32,6 +32,7 @@ export default function VariantForm({isOpen, onClose, productId,  refresh}: Vari
             refresh()
         }).catch(()=>addToast("Variant created fail!", "error"))
     }
+    
   return (
     <Modal isOpen={isOpen} onClose={onClose} title='Create Variant'>
         <Form 

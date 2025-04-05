@@ -24,9 +24,13 @@ export default function Products() {
     { label: "ID", accessor: "id" },
     // { label: "Created", accessor: "created_at" },
     // { label: "Phone", accessor: "updated_at" },
-    { label: "Name", accessor: "name" },
+    { label: "Name", accessor: "name", render: (item:any)=>(
+      <div className="flex gap-2 items-center">
+        <img src={item?.image} alt="" className="h-8 w-8"/>
+        <div>{item?.name}</div>
+      </div>
+    ) },
     { label: "Description", accessor: "description" },
-    { label: "Image", accessor: "image" },
     { label: "Slug", accessor: "slug" },
     { label: "Category", accessor: "category" },
 

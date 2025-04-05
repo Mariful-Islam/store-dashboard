@@ -6,6 +6,7 @@ import { FiPrinter } from "react-icons/fi";
 import Invoice from "./Invoice";
 import { useReactToPrint } from "react-to-print";
 import PaymentForm from "./PaymentForm";
+import Button from "../Button";
 
 interface ProductViewProps {
   isOpen: boolean;
@@ -21,7 +22,7 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
   const reactToPrintFn = useReactToPrint({ contentRef });
 
 
-  const fetchOrders = () => {
+  const fetchOrderDetail = () => {
     api
       .getOrderDetail(id)
       .then((response) => {
@@ -34,7 +35,7 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
 
   useEffect(() => {
     if (id) {
-      fetchOrders();
+      fetchOrderDetail();
     }
   }, [id]);
 
@@ -62,22 +63,37 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
         <div className="flex flex-row gap-4 items-center mb-4">
           <h1 className="font-black text-slate-500 dark:text-slate-300">Payment</h1> 
           <div>
-            {order?.payment_status ? 
+            {order?.payment_status == 0.0 ?
               <div className="text-green-500 bg-green-100 dark:bg-green-900 rounded-md px-4 py-1 w-fit">Clear</div> 
-              : 
-              <div className="text-red-500 bg-red-100 dark:bg-red-900 rounded-md px-4 py-1 w-fi">Pending</div>
+              :
+                <div 
+                  className="text-red-500 bg-red-100 dark:bg-red-900 rounded-md px-4 py-1 w-fit"
+                >
+                  {
+                    order?.payment_status > 0 ? 
+                      <div 
+                        className="flex flex-row gap-2"
+                      >
+                        <div>কাস্টোমার পাবে</div>
+                        <div className="bg-green-500 text-white px-2 rounded-md">{order?.payment_status}</div>
+                      </div> 
+                      : 
+                      <div className="flex flex-row gap-2">
+                        <div>বিক্রেতা পাবে</div>
+                        <div className="bg-red-500 text-white px-2 rounded-md">{order?.payment_status}</div>
+                      </div>
+                  }
+                </div>
             }
           </div>
         </div>
         <div>
           <div className="flex justify-between items-center">
             <h1 className="font-black text-slate-500 dark:text-slate-300">Payment history</h1> 
-            <button 
-              className="border border-blue-500 px-4 py-1 rounded-md text-blue-500 hover:bg-gray-200 dark:hover:bg-gray-600"
-              onClick={()=>setPaymentModal(true)}
-            >
+   
+            <Button type="Outline" onClick={()=>setPaymentModal(true)}>
               + Add Payment
-            </button>
+            </Button>
           </div>
           <div>
             {order?.payments?.map((pay:any, index:number)=>(
@@ -200,9 +216,14 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
         </div>
 
         {order && <Invoice data={order} ref={contentRef}/> }
-        {paymentModal && <PaymentForm isOpen={paymentModal} onClose={()=>setPaymentModal(false)} orderId={id}/>}
-
-        {}
+        {paymentModal && 
+          <PaymentForm 
+            isOpen={paymentModal} 
+            onClose={()=>setPaymentModal(false)} 
+            orderId={id}
+            refresh={fetchOrderDetail}
+          />
+        }
 
       </div>
     </Drawer>

@@ -16,9 +16,10 @@ function Header() {
       toggleHeaderSidebar();
     }
   }, [pathname]);
+  
   return (
     <div
-      className={`sticky dark:bg-gray-800 bg-white top-0 right-0 border-b border-slate-200 dark:border-slate-600 ${
+      className={`sticky z-50 dark:bg-gray-800 bg-white top-0 right-0 border-b border-slate-200 dark:border-slate-600 ${
         openHeaderSidebar && " blur-md mh:blur-none"
       }`}
     >
@@ -35,7 +36,7 @@ function Header() {
             className="flex gap-2 items-center text-slate-500 dark:text-slate-100 hover:bg-slate-50 dark:hover:bg-slate-700 p-1 rounded-full"
             onClick={() => setIsOpenSearch(true)}
           >
-            <CiSearch className="w-4 h-4" />{" "}
+            <CiSearch className="w-5 h-5" />{" "}
             <div className="w-0 overflow-hidden sm:w-fit duration-200 text-sm">search...</div>
           </button>
           {isOpenSearch && (
@@ -48,7 +49,7 @@ function Header() {
 
         <button>
           <div className=" relative cursor-pointer p-2 rounded-full text-gray-500 dark:text-gray-300 hover:bg-gray-200 hover:dark:bg-gray-700 duration-200">
-            <CiMail className="h-4 w-4 " />
+            <CiMail className="h-5 w-5 " />
 
             <div className="bg-blue-500 text-white rounded-full w-[14px] h-[14px] absolute -top-0 -right-0 text-[8px] flex justify-center items-center">
               33
@@ -58,7 +59,7 @@ function Header() {
 
         <button>
           <div className=" relative cursor-pointer p-2 rounded-full text-gray-500 dark:text-gray-300 hover:bg-gray-200 hover:dark:bg-gray-700 duration-200">
-            <CiBellOn className="h-4 w-4 " />
+            <CiBellOn className="h-5 w-5 " />
             <div className="bg-blue-500 text-white rounded-full w-[14px] h-[14px] absolute -top-0 -right-0 text-[8px] flex justify-center items-center">
               33
             </div>

@@ -75,7 +75,7 @@ function Form({ fields, onChangeFields, edit, onClose, onSubmit, submitBtnName }
               >
                 <option>Select a option</option>
 
-                {field?.split('>')[1]?.split('|')?.map((option:any, index:number)=>(
+                {field?.split('>')[1]?.split(',')?.map((option:any, index:number)=>(
                   <option key={index} value={option}>{option}</option>
                 ))}
 

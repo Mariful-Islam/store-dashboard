@@ -10,6 +10,11 @@ import PaymentForm from "./PaymentForm";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/rootReducers";
 import { fetchProducts } from "../../redux/productsSlice";
+import { fetchCustomers } from "../../redux/userSlice";
+import Select from 'react-select'
+
+
+
 
 interface OrderCreateProps {
   isOpen: boolean;
@@ -25,7 +30,8 @@ export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreatePro
   const [isOpenQr, setOpenQr] = useState<boolean>(false);
   const [isPaymentOpen, setIsPaymentOpen] = useState<boolean>(false)
 
-  const products = useSelector((state:RootState)=>state.products.results)
+  const products:any = useSelector((state:RootState)=>state.products.results)
+  const customers:any = useSelector((state:RootState)=>state.customers.results)
 
   const [totalQTY, setTotalQTY] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -35,6 +41,7 @@ export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreatePro
 
   useEffect(()=>{
     dispatch(fetchProducts() as any)
+    dispatch(fetchCustomers() as any)
   }, [dispatch])
 
 
@@ -152,13 +159,23 @@ export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreatePro
 
 
   const fields = [
-    `variant_payload*select`,
-    'customer',
+    `variant*select>${products?.results?.map((prod:any, index)=>prod.slug)}`,
+    `customer_name*select>${customers?.results?.map((cus:any, index)=>cus.username)}`,
+    `retailer_name*select>${customers?.results?.map((cus:any, index)=>cus.username)}`,
+
 
   ]
 
-  console.log(products)
-  
+
+  useEffect(()=>{
+    if(formData?.variant){
+      setFormData((prev:any)=>({...prev, variant_payload: [...(prev?.variant_payload || []), ...(products?.results?.filter((prod:any)=>prod.slug===formData?.variant) || [])]}))
+    }
+
+  }, [formData?.variant])
+
+
+  console.log(formData)
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create Order">
@@ -205,7 +222,14 @@ export default function OrderCreate({ isOpen, onClose, refresh }: OrderCreatePro
         <div>{qrScanner}</div>
       </Modal>
 
-      {isPaymentOpen && <PaymentForm isOpen={isPaymentOpen} onClose={()=>setIsPaymentOpen(false)} orderId={2}/> }
+      {isPaymentOpen && (
+        <PaymentForm 
+          isOpen={isPaymentOpen} 
+          onClose={()=>setIsPaymentOpen(false)} 
+          orderId={2}
+          refresh={refresh}
+        />
+      )}
     </Modal>
   );
 }
