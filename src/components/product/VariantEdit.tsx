@@ -12,15 +12,18 @@ import TextInput from '../TextInput';
 interface VariantFormProps {
     isOpen: boolean;
     onClose: VoidFunction;
-    productId: number;
+    variant: any;
     refresh: VoidFunction;
 }
 
-export default function VariantForm({isOpen, onClose, productId,  refresh}: VariantFormProps) {
+export default function VariantEdit({isOpen, onClose, variant,  refresh}: VariantFormProps) {
     const api = useApi()
-    const [formData, setFormData] = useState<any>({product: productId})
+    const [formData, setFormData] = useState<any>(variant)
     const {addToast} = useToast()
-    const [attrs, setAttrs] = useState([{ key: '', value: '' }]);
+
+    const newAttrs = Object.entries(variant.attribute).map((item)=>({key: item[0], value: item[1]}))
+    
+    const [attrs, setAttrs] = useState<any>(newAttrs);
 
     const handleChange = (index: number, field: 'key' | 'value', value: string) => {
         const updatedInputs = [...attrs];
@@ -66,7 +69,7 @@ export default function VariantForm({isOpen, onClose, productId,  refresh}: Vari
 
 
     const onSubmit = () => {
-        api.createVariant(formData).then(()=>{
+        api.editVariant(variant.id, formData).then(()=>{
             addToast("Variant created Successfully!", "success")
             onClose()
             refresh()
@@ -74,9 +77,12 @@ export default function VariantForm({isOpen, onClose, productId,  refresh}: Vari
     }
 
 
+    console.log(formData)
+
+
     
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title='Create Variant'>
+    <Modal isOpen={isOpen} onClose={onClose} title='Edit Variant'>
 
         <form className='flex flex-col gap-3'>
             <div>

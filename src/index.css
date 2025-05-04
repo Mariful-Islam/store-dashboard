@@ -12,12 +12,13 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 .spinner {
-  width: 15px;
-  height: 15px;
+  width: 20px;
+  height: 20px;
   border: 1px solid transparent;
   border-top: 2px solid #d1d1d1; /* Change the color to your preference */
   border-radius: 50%;
   animation: spin 500ms linear infinite;
+
 }
 
 

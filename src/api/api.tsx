@@ -12,13 +12,14 @@ export const useApi = () => {
         getProducts: (params={}) => interceptor.get(`${API_URL}/store/product/api/products/`, {params: params}),
         createProduct: (data:any) => interceptor.post(`${API_URL}/store/product/api/products/`, data),
         getProductDetail: (slug:any) => interceptor.get(`${API_URL}/store/product/api/products/${slug}/`),
-        
-        getCustomers: () => interceptor.get(`${API_URL}/store/user/api/customers/`),
+        productsWithVariants: (params={}) => interceptor.get(`${API_URL}/store/product/api/product-with-variants/`, {params: params}),
+
+        getCustomers: (params={}) => interceptor.get(`${API_URL}/store/user/api/customers/`, {params: params}),
         createCustomers: (data:any) => interceptor.post(`${API_URL}/store/user/api/customers/`, data),
         getCustomerDetail: (id:number) => interceptor.get(`${API_URL}/store/user/api/customers/${id}/`),
         editCustomer: (id:number, data:any) => interceptor.put(`${API_URL}/store/user/api/customers/${id}/`, data),
 
-        getRetailers: () => interceptor.get(`${API_URL}/store/user/api/retailers/`),
+        getRetailers: (params={}) => interceptor.get(`${API_URL}/store/user/api/retailers/`, {params: params}),
         createRetailers: (data:any) => interceptor.post(`${API_URL}/store/user/api/retailers/`, data),
         getRetailerDetail: (id: number) => interceptor.get(`${API_URL}/store/user/api/retailers/${id}/`),
         editRetailer: (id:number, data:any) => interceptor.put(`${API_URL}/store/user/api/retailers/${id}/`, data),
@@ -28,9 +29,11 @@ export const useApi = () => {
         createOrders: (data:any) => interceptor.post(`${API_URL}/store/order/api/orders/`, data),
         getOrderDetail: (id:number) => interceptor.get(`${API_URL}/store/order/api/orders/${id}/`),
 
-        getVariants: () => interceptor.get(`${API_URL}/store/product/api/product-variants/`),
+        getVariants: (params={}) => interceptor.get(`${API_URL}/store/product/api/product-variants/`, {params: params}),
         createVariant: (data:any) => interceptor.post(`${API_URL}/store/product/api/product-variants/`, data),
         deleteVariant: (id:number) => interceptor.delete(`${API_URL}/store/product/api/product-variants/${id}/`),
+        editVariant: (id:number, data:any) => interceptor.put(`${API_URL}/store/product/api/product-variants/${id}/`, data),
+
 
         makePayment: (data:any) => interceptor.post(`${API_URL}/store/payment/api/payments/`, data),
         

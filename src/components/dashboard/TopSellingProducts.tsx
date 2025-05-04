@@ -1,18 +1,10 @@
+import Carousel from "react-multi-carousel";
 
-import Carousel from 'react-multi-carousel';
-import { products } from './sampleItems';
-import Product from './Product';
-
-
-
-
-
-export default function TopSellingProducts() {
-
+export default function TopSellingProducts({ data }: { data: any[] }) {
   return (
     <div className="w-full p-4 bg-white border border-slate-200 dark:border-slate-600 rounded-md dark:bg-slate-900">
       <h2 className="text-lg font-bold text-center">Top Selling Product</h2>
-      <div className='mt-4'>
+      <div className="mt-4">
         <Carousel
           additionalTransfrom={0}
           arrows
@@ -66,18 +58,37 @@ export default function TopSellingProducts() {
           slidesToSlide={1}
           swipeable
         >
-         {products.map((item, index)=>(
-          <Product
-            key={index}
-            name={item.name}
-            price={item.price}
-            totalSells={item.totalSells}
-            image={item.image}
-            stockLeft={item.stockLeft}
-
-          />
-         ))}
-
+          {data?.map((item, index) => (
+            <div className="m-4" key={index}>
+              {/* <img src={image} alt="" /> */}
+              <div className="mt-2">
+                <h3 className="font-bold text-blue-500">{item?.name}</h3>
+                <div className="text-sm">
+                  <div>
+                    <strong className="text-slate-500">Price: </strong>
+                    <span>{item?.price}</span>
+                  </div>
+                  <div>
+                    <strong className="text-slate-500">
+                      Total quantity sold:{" "}
+                    </strong>
+                    <span>{item?.total_quantity_sold}</span>
+                  </div>
+                  
+                  <div>
+                    <strong className="text-slate-500">
+                      total_sold_amount:{" "}
+                    </strong>
+                    <span>{item?.total_sold_amount}</span>
+                  </div>
+                  <div>
+                    <strong className="text-slate-500">Stock Left: </strong>
+                    <span>{item?.stock}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
         </Carousel>
       </div>
     </div>

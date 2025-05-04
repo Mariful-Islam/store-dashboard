@@ -1,59 +1,86 @@
-import React from 'react'
-import ZingChart from 'zingchart-react';
+import React, { useEffect, useState } from "react";
+import ZingChart from "zingchart-react";
+import Select from "../Select";
+import moment from "moment";
 
+export default function SellsChart({ data }: { data?: any }) {
+  const theme = localStorage.getItem("theme");
+  const [duration, setDuration] = useState<string>("daily");
+  const [chartConfig, setChartConfig] = useState<any>({});
 
-export default function SellsChart() {
-  const theme = localStorage.getItem('theme')
-  
-  const chartConfig = {
-    type: 'area', // Type of chart (line chart in this case)
-    series: [
-      {
-        values: [33, 20, 30, 40, 22, 11, 15, 34, 56, 21, 16, 5, 45, 38, 27], // Data for the series
-        tooltip: {
-          text: "%v taka \n day %k",  // Tooltip text format (you can use %value or any other placeholder)
-          backgroundColor: "#2196F3",  // Set background color
-          borderRadius: "5px",  // Set border radius for rounded corners
-          fontSize: "16px",  // Set font size
+  useEffect(() => {
+    if (!data || !data[duration]) return;
+
+    const salesValues = data[duration].map(
+      (item: any) => item?.total_sales ?? 0
+    );
+
+    const salesLabels = data[duration].map((item: any) => {
+
+      if (duration === "daily") return moment(item?.day).format("DD MMM");
+      if (duration === "weekly") return `Week ${moment(item?.week).week()}`;
+      if (duration === "monthly") return moment(item?.month).format("MMM");
+      return moment(item?.day).format("DD");
+    });
+
+    setChartConfig({
+      type: "line",
+      series: [
+        {
+          values: salesValues,
+          tooltip: {
+            text: "%node-value Taka",
+            backgroundColor: "#2196F3",
+            borderRadius: "5px",
+            fontSize: "16px",
+            fontWeight: "bold",
+            fontColor: "#fff",
+            padding: "10px",
+            shadow: true,
+            shadowColor: "#000",
+            shadowBlur: "8",
+          },
+        },
+      ],
+      scaleX: {
+        labels: salesLabels,
+        label: {
+          text: (duration==="daily" && "Days") || (duration==="weekly" && "Weeks") || (duration==="monthly" && "Months") ,
+          color: "#2196F3",
+        },
+        item: {
+          fontColor: theme === "dark" ? "#fff" : "#000",
+        },
+      },
+      scaleY: {
+        label: {
+          text: "Taka",
+          color: "#2196F3",
           fontWeight: "bold",
-          fontColor: "#fff",  // Set font color
-          padding: "10px",  // Set padding around the text
-          shadow: true,  // Add shadow effect to tooltip
-          shadowColor: "#000",  // Shadow color
-          shadowBlur: "8",  // Shadow blur intensity
-        }
+        },
+        item: {
+          fontColor: theme === "dark" ? "#fff" : "#000",
+        },
       },
-    ],
-    scaleX: {
-      labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'], // X-axis labels
-      label: {
-        text: 'Date',
-        color: '#2196F3'
-      },
-      value: {
-        color: 'black'
-      }
-    },
-    scaleY: {
-      label: {
-        text: 'Taka', // Y-axis label
-        color: '#2196F3',
-        fontWeight: 'bold',
-        lineColor: '#2196F3'
-      },
-      
-    },
+      backgroundColor: theme === "dark" ? "#0F172A" : "#fff",
+    });
+  }, [data, duration, theme]);
 
-    backgroundColor: theme === 'dark' ? '#0F172A' : '',
-
-
+  const handleDuration = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setDuration(e.target.value.toLowerCase());
   };
 
-
   return (
-    <div className='bg-white p-4 border border-slate-200 dark:border-slate-600 rounded-md dark:bg-slate-900'>
-      <h2 className='text-lg font-bold text-center'>Everyday Sells Report</h2>
-      <ZingChart data={chartConfig} height={400} width='100%' />
+    <div className="bg-white p-4 border border-slate-200 dark:border-slate-600 rounded-md dark:bg-slate-900">
+      <h2 className="text-lg font-bold text-center mb-4">
+        Everyday Sells Report
+      </h2>
+      <Select value={duration} onChange={handleDuration}>
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+      </Select>
+      <ZingChart data={chartConfig} height={400} width="100%" />
     </div>
-  )
+  );
 }

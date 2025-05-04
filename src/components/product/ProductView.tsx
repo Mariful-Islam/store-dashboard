@@ -11,6 +11,8 @@ import Button from "../Button";
 import VariantForm from "./VariantForm";
 import { MdDelete } from "react-icons/md";
 import { useToast } from "../../contexts/Notification";
+import { CiEdit } from "react-icons/ci";
+import VariantEdit from "./VariantEdit";
 
 interface ProductViewProps {
   isOpen: boolean;
@@ -23,6 +25,7 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
   const [product, setProduct] = useState<any>();
   const [variantForm, setVariantForm] = useState<boolean>(false)
   const {addToast} = useToast()
+  const [variantEdit, setVariantEdit] = useState(null)
 
   const fetchProductDetail = () => {
     api
@@ -39,7 +42,6 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
     }
   }, [slug]);
 
-  console.log(product);
 
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
@@ -77,7 +79,7 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title="Product">
-      <div className="flex flex-col gap-3">
+      <div className="flex flex-col gap-3 text-sm">
         <div className="border border-slate-300 dark:border-slate-600 rounded-md p-4 text-slate-800 dark:text-slate-50">
           <div>
             <strong>Product Name: </strong>
@@ -156,6 +158,7 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
               </div>
               <div className="flex flex-col gap-6">
                 <MdDelete className="text-red-500 h-6 w-6" onClick={()=>handleDeleteVariant(variant?.id)}/>
+                <CiEdit className="text-blue-500 h-6 w-6" onClick={()=>setVariantEdit(variant)}/>
                 <LuPrinter
                   className="hover:text-blue-500 duration-200 h-6 w-6"
                   onClick={() => reactToPrintFn()}
@@ -173,6 +176,15 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
             refresh={fetchProductDetail}
           />
         }
+
+        {variantEdit && (
+          <VariantEdit
+            isOpen={variantEdit ? true : false}
+            onClose={()=>setVariantEdit(null)}
+            variant={variantEdit}
+            refresh={fetchProductDetail}
+          />
+        )}
       </div>
     </Drawer>
   );

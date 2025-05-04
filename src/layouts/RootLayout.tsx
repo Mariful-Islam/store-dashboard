@@ -17,7 +17,7 @@ export default function RootLayout({
         <div className="w-full">
           <Header />
           <div
-            className={` p-6 overflow-auto ${openHeaderSidebar ? 'ml-0 mh:ml-[250px] blur-md mh:blur-none' : 'ml-0 mh:ml-12'} duration-200`}
+            className={` p-3 overflow-auto ${openHeaderSidebar ? 'ml-0 mh:ml-[250px] blur-md mh:blur-none' : 'ml-0 mh:ml-12'} duration-200`}
           >
             {children}
             <Outlet/>

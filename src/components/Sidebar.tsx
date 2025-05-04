@@ -4,18 +4,27 @@ import useMenuItems from "./menuItems";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 
 import { IoSettingsOutline } from "react-icons/io5";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalContext";
+import { useClickOutside } from "../lib/useClickOutside";
+import Button from "./Button";
 
 function Sidebar() {
   const menuItems = useMenuItems();
   const {pathname} = useLocation();
+  const router = useNavigate()
 
   const { openHeaderSidebar, toggleHeaderSidebar } = useContext(GlobalContext);
 
+  const ref = useClickOutside(() => {
+    if(openHeaderSidebar && (window.innerWidth < 860)){
+      toggleHeaderSidebar()
+    }
+
+  })
 
   return (
-    <div className=" fixed z-[60] h-screen">
+    <div className=" fixed z-[60] h-screen" ref={ref as any}>
       <div
         className={`p-2 border-r border-slate-200 dark:border-slate-600 absolute  h-screen shadow-md mh:shadow-none  ${
           openHeaderSidebar
@@ -41,17 +50,19 @@ function Sidebar() {
           <nav className="">
             <ul className="list-none flex flex-col gap-0">
               {menuItems.map((item, index) => (
-                <li key={index} className=" relative">
-                  <Link
-                    to={item.url || ""}
-                    className={`flex items-center gap-2 ${
-                      openHeaderSidebar ? "px-4" : " justify-center px-1"
+                <li key={index} className="relative">
+                  <Button
+                    hoverText={item.name}
+                    hoverTextAlignClass="-right-[110px]"
+                    onClick={()=>router(`${item.url}`)}
+                    className={`flex items-center gap-2 w-full ${
+                      openHeaderSidebar ? "px-4" : " justify-center px-2"
                     } ${
                       pathname === item.url ? "text-blue-500" : ""
-                    } p-2 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-blue-500 hover:text-blue-500 rounded-md font-bold duration-200`}
+                    } p-2 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-blue-500 hover:text-blue-500 rounded-md font-bold duration-200`}
                   >
                     {item.icon} {openHeaderSidebar && <>{item.name}</>}
-                  </Link>
+                  </Button>
                 </li>
               ))}
             </ul>

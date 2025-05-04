@@ -10,7 +10,7 @@ interface SidebarProps{
 export const sideBarItems: SidebarProps[] = [
     {
         name: 'Profile',
-        url: '/store-settings/',
+        url: '/store-settings/profile',
         icon: <CiUser className="w-5 h-5" />
     },
     {

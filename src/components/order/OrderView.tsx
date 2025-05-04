@@ -12,9 +12,10 @@ interface ProductViewProps {
   isOpen: boolean;
   onClose: VoidFunction;
   id: number;
+  refresh: VoidFunction;
 }
 
-export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
+export function OrderView({ isOpen, onClose, id, refresh }: ProductViewProps) {
   const api = useApi();
   const [order, setOrder] = useState<any>();
   const [paymentModal, setPaymentModal] = useState<boolean>(false)
@@ -54,9 +55,11 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title="Order Details">
       <div className="bg-white dark:bg-gray-800 text-sm dark:text-slate-100">
-        <div className="flex gap-2 justify-end group cursor-pointer" onClick={()=>reactToPrintFn()}>
-          <div className="group-hover:text-blue-500">Print Invoice </div>
-          <FiPrinter className=" group-hover:text-blue-500 duration-200 w-5 h-5 " />
+        <div className="flex gap-2 justify-end group cursor-pointer">
+          <Button type="white-btn"  onClick={()=>reactToPrintFn()} hoverText="Print invoice">
+            <FiPrinter className=" group-hover:text-blue-500 duration-200 w-5 h-5 " />
+
+          </Button>
         </div>
 
         {/* Payments */}
@@ -67,20 +70,18 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
               <div className="text-green-500 bg-green-100 dark:bg-green-900 rounded-md px-4 py-1 w-fit">Clear</div> 
               :
                 <div 
-                  className="text-red-500 bg-red-100 dark:bg-red-900 rounded-md px-4 py-1 w-fit"
+                  
                 >
                   {
                     order?.payment_status > 0 ? 
                       <div 
                         className="flex flex-row gap-2"
                       >
-                        <div>কাস্টোমার পাবে</div>
-                        <div className="bg-green-500 text-white px-2 rounded-md">{order?.payment_status}</div>
+                        <div className="bg-blue-100 text-blue-500 border border-blue-500 px-4 py-1 rounded-md font-medium">+{order?.payment_status.toFixed(2)}</div>
                       </div> 
                       : 
                       <div className="flex flex-row gap-2">
-                        <div>বিক্রেতা পাবে</div>
-                        <div className="bg-red-500 text-white px-2 rounded-md">{order?.payment_status}</div>
+                        <div className="bg-red-100 text-red-500 border border-red-500 px-4 py-1 rounded-md font-medium">{order?.payment_status.toFixed(2)}</div>
                       </div>
                   }
                 </div>
@@ -140,24 +141,25 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
           {order?.variants?.map((item: any, index: number) => (
             <div key={index} className="border-b border-slate-300 dark:border-slate-700 pb-2 m-2">
               <div className="flex gap-2">
-                <div>ID: </div>
+                <div className="font-bold">ID: </div>
                 <div>{item?.id}</div>
               </div>
               <div className="flex gap-2">
-                <div>Item Name </div>
+                <div className="font-bold">Item Name </div>
                 <div>{item?.name}</div>
               </div>
               <div className="flex gap-2">
-                <div>Unit Price: </div>
-                <div>{item?.unit_price}</div>
+                <div className="font-bold">Unit Price: </div>
+                <div>{item?.unit_price.toFixed(2)}</div>
               </div>
+        
               <div className="flex gap-2">
-                <div>Item Quantity: </div>
+                <div className="font-bold">Item Quantity: </div>
                 <div>{item?.quantity}</div>
               </div>
               <div className="flex gap-2">
-                <div>Price </div>
-                <div>{item?.price}</div>
+                <div className="font-bold">Total Price </div>
+                <div>{item?.price.toFixed(2)}</div>
               </div>
             </div>
           ))}
@@ -221,7 +223,10 @@ export function OrderView({ isOpen, onClose, id }: ProductViewProps) {
             isOpen={paymentModal} 
             onClose={()=>setPaymentModal(false)} 
             orderId={id}
-            refresh={fetchOrderDetail}
+            refresh={()=>{
+              fetchOrderDetail()
+              refresh()
+            }}
           />
         }
 

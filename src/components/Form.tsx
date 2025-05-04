@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Button from "./Button";
+import TextInput from "./TextInput";
+import { GlobalContext } from "../contexts/GlobalContext";
 
 interface FormProps {
   fields: any[];
@@ -14,6 +16,7 @@ function Form({ fields, onChangeFields, edit, onClose, onSubmit, submitBtnName }
 
   const [formData, setFormData] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false)
+  const {handleFormValidation} = useContext(GlobalContext)
 
   useEffect(()=>{
     if(edit){
@@ -41,7 +44,6 @@ function Form({ fields, onChangeFields, edit, onClose, onSubmit, submitBtnName }
     setLoading(true)
 
     const res = onSubmit(e)
-    console.log(res, "lllllllllllllll")
 
     if(res==="success" || res==="failed"){
       setLoading(false)
@@ -91,14 +93,13 @@ function Form({ fields, onChangeFields, edit, onClose, onSubmit, submitBtnName }
               <label htmlFor={field} className="text-sm font-medium text-slate-500 dark:text-slate-300">
                 {field?.split('*')[0]?.split('_')?.join(' ')?.toUpperCase()}
               </label>
-              <input
+              <TextInput
                 id={field}
                 type="number"
                 name={field?.split('*')[0]}
                 placeholder={`Type ${field?.split('*')[0]?.split('_')?.join(' ')}`}
                 value={formData?.[field?.split('*')[0]] || ""}
                 onChange={onChange}
-                className="block w-full rounded-md  px-3 py-1.5 text-base text-slate-900 dark:text-slate-50 outline-1 -outline-offset-1 outline-slate-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6"
               />
             </div>
           )
@@ -108,14 +109,13 @@ function Form({ fields, onChangeFields, edit, onClose, onSubmit, submitBtnName }
             <label htmlFor={field} className="text-sm font-medium text-slate-500 dark:text-slate-300">
               {field.split('_').join(' ').toUpperCase()}
             </label>
-            <input
+            <TextInput
               id={field}
               type="text"
               name={field}
               placeholder={`Type ${field.split('_').join(' ')}`}
               value={formData?.[field] || ""}
               onChange={onChange}
-              className="block w-full rounded-md  px-3 py-1.5 text-base text-slate-900 dark:text-slate-50 outline-1 -outline-offset-1 outline-slate-400 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-blue-500 sm:text-sm/6"
             />
           </div>
         )}})}
@@ -124,7 +124,7 @@ function Form({ fields, onChangeFields, edit, onClose, onSubmit, submitBtnName }
           <Button type="DangerOutline" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="Normal" submit>
+          <Button type="Normal" submit disable={!handleFormValidation(formData, fields)}>
             {loading ? <div className="spinner"></div> : <div>{submitBtnName ? submitBtnName : 'Submit'}</div> }
           </Button>
         </div>

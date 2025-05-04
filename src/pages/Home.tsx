@@ -52,10 +52,10 @@ export default function Home() {
       {/* <Table columns={[]} data={[]}/> */}
       <div className=" mt-4">
         <div>
-          <SellsChart/>
+          <SellsChart data={data?.sells}/>
         </div>
         <div className="mt-4">
-          <TopSellingProducts/>
+          <TopSellingProducts data={data?.top_selling_products || []}/>
         </div>
         <div className="mt-4 flex gap-4 w-full">
           <div className="w-full">

@@ -6,5 +6,6 @@ import Retailers from "./Retailers";
 import Profile from "./Profile";
 import Notification from "./Notification";
 import Payment from "./Payment";
+import Discount from "./Discount";
 
-export {Home, Products, Orders, Customers, Retailers, Profile, Notification, Payment}
+export {Home, Products, Orders, Customers, Retailers, Profile, Notification, Payment, Discount}

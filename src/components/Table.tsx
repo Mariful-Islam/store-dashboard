@@ -24,9 +24,9 @@ const Table = ({ columns, data }: TableProps) => {
   }
 
   return (
-    <div className="bg-white dark:bg-black rounded-md text-sm overflow-auto">
-      <table className="table-auto w-full border-collapse border border-slate-200 dark:border-slate-600 text-slate-500 dark:text-slate-200">
-        <thead>
+    <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-md text-sm overflow-auto">
+      <table className="table-auto w-full border-collapse  ">
+        <thead className="text-slate-500 dark:text-slate-200">
           <tr>
             {columns?.map((column, index) => (
               <th
@@ -38,7 +38,7 @@ const Table = ({ columns, data }: TableProps) => {
             ))}
           </tr>
         </thead>
-        <tbody>
+        <tbody className="text-slate-700 dark:text-slate-200">
           {data?.results ? 
             data.results.map((row:any, index:number) => (
             <tr
