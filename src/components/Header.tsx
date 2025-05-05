@@ -1,22 +1,26 @@
 import React, { useContext, useEffect, useState } from "react";
-import ThemeToggle from "./Theme";
 
 import { CiBellOn, CiMail, CiMenuFries, CiSearch } from "react-icons/ci";
 import { useLocation } from "react-router-dom";
 import { GlobalContext } from "../contexts/GlobalContext";
 import Search from "./Search";
+import Button from "./Button";
+import { IoSunnyOutline } from "react-icons/io5";
+import { MdOutlineNightlight } from "react-icons/md";
+import { useTheme } from "../contexts/ThemeContext";
 
 function Header() {
   const { openHeaderSidebar, toggleHeaderSidebar } = useContext(GlobalContext);
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
   const [isOpenSearch, setIsOpenSearch] = useState<boolean>(false);
+  const {theme, handleTheme} = useTheme()
 
   useEffect(() => {
     if (window.innerWidth < 860) {
       toggleHeaderSidebar();
     }
   }, [pathname]);
-  
+
   return (
     <div
       className={`sticky z-50 dark:bg-gray-800 bg-white top-0 right-0 border-b border-slate-200 dark:border-slate-600 ${
@@ -37,7 +41,9 @@ function Header() {
             onClick={() => setIsOpenSearch(true)}
           >
             <CiSearch className="w-5 h-5" />{" "}
-            <div className="w-0 overflow-hidden sm:w-fit duration-200 text-sm">search...</div>
+            <div className="w-0 overflow-hidden sm:w-fit duration-200 text-sm">
+              search...
+            </div>
           </button>
           {isOpenSearch && (
             <Search
@@ -66,7 +72,19 @@ function Header() {
           </div>
         </button>
 
-        <ThemeToggle />
+        {/* <ThemeToggle /> */}
+        <Button
+          hoverText="Switch Light mode / Dark mode"
+          hoverTextAlignClass="-bottom-[135px]"
+          onClick={handleTheme}
+          className="p-2 rounded-full text-gray-500 dark:text-gray-300 hover:bg-gray-200 hover:dark:bg-gray-700 duration-200"
+        >
+          {theme === "light" ? (
+            <IoSunnyOutline className="text-black w-5 h-5" />
+          ) : (
+            <MdOutlineNightlight className="text-white w-4 h-4" />
+          )}
+        </Button>
 
         <div className="flex items-center">
           <div className="flex gap-2 items-center">

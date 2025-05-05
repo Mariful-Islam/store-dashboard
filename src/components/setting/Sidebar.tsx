@@ -6,7 +6,7 @@ export default function Sidebar() {
     const {pathname} = useLocation()
 
   return (
-    <aside>
+    <aside className='border-r border-gray-200 pr-3'>
         {sideBarItems.map((item, index)=>(
             <Link 
                 key={index} 

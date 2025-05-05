@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import ZingChart from "zingchart-react";
 import Select from "../Select";
 import moment from "moment";
+import { useTheme } from "../../contexts/ThemeContext";
+
 
 export default function SellsChart({ data }: { data?: any }) {
-  const theme = localStorage.getItem("theme");
+  const {theme, handleTheme} = useTheme()
+
+  console.log(theme)
+
   const [duration, setDuration] = useState<string>("daily");
   const [chartConfig, setChartConfig] = useState<any>({});
+
+  
 
   useEffect(() => {
     if (!data || !data[duration]) return;
@@ -75,6 +82,7 @@ export default function SellsChart({ data }: { data?: any }) {
       <h2 className="text-lg font-bold text-center mb-4">
         Everyday Sells Report
       </h2>
+
       <Select value={duration} onChange={handleDuration}>
         <option value="daily">Daily</option>
         <option value="weekly">Weekly</option>

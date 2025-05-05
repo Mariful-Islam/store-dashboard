@@ -314,7 +314,7 @@ export default function OrderCreate({
                 type="text"
                 name="customer_name"
                 placeholder="customer_name"
-                value={formData?.customer_name}
+                value={formData?.customer_name || ''}
                 onChange={onChange}
               />
             </div>
@@ -331,7 +331,7 @@ export default function OrderCreate({
                 type="text"
                 name="retailer_name"
                 placeholder="retailer_name"
-                value={formData?.retailer_name}
+                value={formData?.retailer_name || ''}
                 onChange={onChange}
               />
             </div>
