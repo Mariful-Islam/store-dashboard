@@ -51,6 +51,21 @@ export function OrderView({ isOpen, onClose, id, refresh }: ProductViewProps) {
   }
 
 
+  const date = new Date(order?.created_at);
+
+  // Convert to Bangladesh time by adding 6 hours
+  const bangladeshOffset = 6 * 60; // in minutes
+  const OrderDate = date.toLocaleString("en-BD", {
+    timeZone: "Asia/Dhaka",
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true // This enables AM/PM format
+  });
+
 
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title="Order Details">
@@ -127,7 +142,9 @@ export function OrderView({ isOpen, onClose, id, refresh }: ProductViewProps) {
           <div className="flex gap-2">
             <div>Ordered Time: </div>
             <div>
-              {moment(order?.created_at).format("HH:MM A DD MMMM YYYY")}
+              {/* {moment(order?.created_at).format("HH:MM A DD MMMM YYYY")} */}
+              {/* {order?.created_at} */}
+              {OrderDate.toString()}
             </div>
           </div>
           <div className="flex gap-2">

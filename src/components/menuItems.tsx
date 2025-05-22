@@ -1,6 +1,7 @@
 import { JSX, useState } from "react";
 import { AiOutlineProduct } from "react-icons/ai";
 import { BiPurchaseTagAlt } from "react-icons/bi";
+import { CiDiscount1 } from "react-icons/ci";
 import { GoHome } from "react-icons/go";
 import { IoIosPeople } from "react-icons/io";
 import { IoQrCodeOutline } from "react-icons/io5";
@@ -20,33 +21,38 @@ const useMenuItems = () => {
     {
       name: "Home",
       url: "/",
-      icon: <GoHome className="w-6 h-6" />,
+      icon: <GoHome className="w-5 h-5" />,
     },
     {
       name: "Products",
-      icon: <AiOutlineProduct className="w-6 h-6" />,
+      icon: <AiOutlineProduct className="w-5 h-5" />,
       // count: 12,
       url: "/products"
     },
     {
       name: "Orders",
-      icon: < BiPurchaseTagAlt  className="w-6 h-6" />,
+      icon: < BiPurchaseTagAlt  className="w-5 h-5" />,
       url: "/orders"
     },
     {
       name: "Customers",
       url: "/customers",
-      icon: <IoIosPeople className="w-6 h-6" />,
+      icon: <IoIosPeople className="w-5 h-5" />,
     },
     {
       name: "Retailers",
       url: "/retailers",
-      icon: <RiUserLine className="w-6 h-6"/>,
+      icon: <RiUserLine className="w-5 h-5"/>,
     },
     {
       name: "Qr Code",
       url: "/qr-code",
-      icon: <IoQrCodeOutline className="w-6 h-6"/>,
+      icon: <IoQrCodeOutline className="w-5 h-5"/>,
+    },
+    {
+      name: "Discount",
+      url: "/discount",
+      icon: <CiDiscount1 className="w-5 h-5"/>,
     },
   
   ]);

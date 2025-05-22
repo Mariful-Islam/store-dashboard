@@ -8,6 +8,7 @@ import TopSellingProducts from "../components/dashboard/TopSellingProducts";
 import TopBuyingCustomers from "../components/dashboard/TopBuyingCustomers";
 import SellsChart from "../components/dashboard/SellsChart";
 import TopSellerRetailers from "../components/dashboard/TopSellerRetailers";
+import Button from "../components/Button";
 
 
 export default function Home() {
@@ -56,6 +57,7 @@ export default function Home() {
         </div>
         <div className="mt-4">
           <TopSellingProducts data={data?.top_selling_products || []}/>
+   
         </div>
         <div className="mt-4 flex gap-4 w-full">
           <div className="w-full">

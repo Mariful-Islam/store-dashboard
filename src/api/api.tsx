@@ -36,7 +36,13 @@ export const useApi = () => {
 
 
         makePayment: (data:any) => interceptor.post(`${API_URL}/store/payment/api/payments/`, data),
-        
+
+
+
+        // Discount
+        getDiscounts: (params={}) => interceptor.get(`${API_URL}/store/discount/api/discounts/`, {params: params}),
+        createDiscount: (data:any) => interceptor.post(`${API_URL}/store/discount/api/discounts/`, data ),
+        getDiscountDetail: (id:any) => interceptor.get(`${API_URL}/store/discount/api/discounts/${id}/`),
 
     }
     return api

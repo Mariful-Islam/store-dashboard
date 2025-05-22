@@ -128,7 +128,16 @@ function VariantSelect({ isOpen, onClose, onSave }: VariantSelectProps) {
                   />
                   <div className="flex flex-col">
                     <span className="text-sm">{variant.name}</span>
-                    <span className="text-[12px] text-gray-400">{variant.price}</span>
+                    <div className="text-[12px] text-gray-400">
+                      {variant.price===variant.discount_price ? (
+                        <span>{variant.discount_price}</span>
+                      ): (
+                        <div>
+                          <span className="line-through">{variant.price.toFixed(2)}</span>
+                          <span className="ml-2">{variant.discount_price.toFixed(2)}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </label>
               ))}

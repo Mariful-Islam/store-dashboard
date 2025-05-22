@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
   Customers,
+  Discount,
   Home,
   Notification,
   Orders,
@@ -35,6 +36,8 @@ function App() {
                   <Route path="/customers" element={<Customers />} />
                   <Route path="/retailers" element={<Retailers />} />
                   <Route path="/qr-code" element={<QrCode />} />
+                  <Route path="/discount" element={<Discount />} />
+
 
                   <Route path="store-settings/*" element={<StoreSettings />}>
                     <Route path="profile" element={<Profile />} />

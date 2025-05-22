@@ -224,8 +224,8 @@ export default function OrderCreate({
     const qunatifyProducts = products.map((item: any) => ({
       ...item,
       quantity: 1,
-      price: Number(item.price),
-      price_per_total_product: Number(item.price),
+      price: Number(item.discount_price),
+      price_per_total_product: Number(item.discount_price),
     }));
 
     const isDuplicate = qunatifyProducts.some((item1: any) =>

@@ -1,4 +1,7 @@
 import Carousel from "react-multi-carousel";
+import Button from "../Button";
+import { FaArrowRight } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 export default function TopSellingProducts({ data }: { data: any[] }) {
   return (
@@ -74,7 +77,7 @@ export default function TopSellingProducts({ data }: { data: any[] }) {
                     </strong>
                     <span>{item?.total_quantity_sold}</span>
                   </div>
-                  
+
                   <div>
                     <strong className="text-slate-500">
                       total_sold_amount:{" "}
@@ -90,6 +93,11 @@ export default function TopSellingProducts({ data }: { data: any[] }) {
             </div>
           ))}
         </Carousel>
+      </div>
+      <div className="flex justify-end mt-2">
+        <Link to={'#'} className="hover:border-b flex gap-3 items-center text-sm">
+          more <FaArrowRight className="w-3 h-3"/>
+        </Link>
       </div>
     </div>
   );

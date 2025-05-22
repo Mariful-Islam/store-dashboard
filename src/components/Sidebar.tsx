@@ -80,7 +80,7 @@ function Sidebar() {
             pathname === "/store-settings" ? "text-blue-500" : ""
           } py-2 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-blue-500 hover:text-blue-500 rounded-md font-bold duration-200`}
         >
-          <IoSettingsOutline className="w-6 h-6" /> {openHeaderSidebar && <>Settings</>}
+          <IoSettingsOutline className="w-5 h-5" /> {openHeaderSidebar && <>Settings</>}
         </Link>
       </div>
     </div>
