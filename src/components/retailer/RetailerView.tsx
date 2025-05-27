@@ -112,6 +112,7 @@ export function RetailerView({ isOpen, onClose, id, refresh }: CustomerViewProps
             isOpen={orderView ? true : false}
             onClose={() => setOrderView(null)}
             id={orderView}
+            refresh={refresh}
           />
         )}
 

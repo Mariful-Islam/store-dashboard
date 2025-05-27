@@ -20,7 +20,7 @@ export default function DiscountCreate({
   onClose,
 }: ProductCreateProps) {
   const api = useApi();
-  const [formData, setFormData] = useState<any>({product: []});
+  const [formData, setFormData] = useState<any>({ products: [] });
   const [loading, setLoading] = useState<boolean>(false);
   const { handleFormValidation } = useContext(GlobalContext);
   const [isOpenVariantSelect, setIsOpenVariantSelect] =
@@ -51,62 +51,77 @@ export default function DiscountCreate({
       });
   };
 
-  const handleDeleteSelectedProduct = (item:any) => {
-    setFormData((prev:any)=>{
-      const newPrevProdId = prev?.products?.filter((prodId:any)=>prodId!==item?.id)
-      const newPrevProd = prev?.product_data?.filter((product:any)=>product?.id!==item?.id)
+  const handleDeleteSelectedProduct = (item: any) => {
+    setFormData((prev: any) => {
+      const newPrevProdId = prev?.products?.filter(
+        (prodId: any) => prodId !== item?.id
+      );
+      const newPrevProd = prev?.product_data?.filter(
+        (product: any) => product?.id !== item?.id
+      );
 
-      return {...prev, product: newPrevProdId, product_data: newPrevProd}
-    })
-  }
+      return { ...prev, products: newPrevProdId, product_data: newPrevProd };
+    });
+  };
 
   const columns = [
     {
-      label: "ID", accessor: "id"
+      label: "ID",
+      accessor: "id",
     },
     {
-      label: "Name", accessor: "name"
+      label: "Name",
+      accessor: "name",
     },
     {
-      label: "Category", accessor: "category"
+      label: "Category",
+      accessor: "category",
     },
     {
-      label: "", accessor: "", render: (item:any) => (
-        <button onClick={()=>handleDeleteSelectedProduct(item)}>
+      label: "",
+      accessor: "",
+      render: (item: any) => (
+        <button onClick={() => handleDeleteSelectedProduct(item)}>
           <RiDeleteBin7Line className="hover:text-red-500 text-gray-700" />
         </button>
-      )
-    }
-  ]
+      ),
+    },
+  ];
 
+  const onSave = (value: any) => {
+    const productIDs = Array.isArray(value)
+      ? value.map((item) => item?.id)
+      : value?.id;
 
-
-  const onSave = (value:any) => {
-    const productIDs = Array.isArray(value) ? value.map((item)=>item?.id) : value?.id
-
-    setFormData((prev:any)=>({...prev, products: [...(prev.product || []), ...productIDs], product_data: [...(prev?.product_data || []), ...value]}))
-  }
-
-
-
-  console.log(formData)
+    setFormData((prev: any) => ({
+      ...prev,
+      products: [...(prev.product || []), ...productIDs],
+      product_data: [...(prev?.product_data || []), ...value],
+    }));
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Create product">
       <form className="flex flex-col gap-4" onSubmit={onSubmit}>
-        {formData?.product?.length !== 0 ? (
+        <div className="text-sm font-medium mt-4">
+          Select discount eligible product
+        </div>
+
+        {formData?.products?.length !== 0 && (
           <div>
             <Table columns={columns as any} data={formData?.product_data} />
-  
-          </div>
-        ) : (
-          <div>
-            <div>Select discount eligible product</div>
-            <div onClick={() => setIsOpenVariantSelect(!isOpenVariantSelect)}>
-              Select
-            </div>
           </div>
         )}
+        <div>
+          <div
+            onClick={() => setIsOpenVariantSelect(!isOpenVariantSelect)}
+            className="border border-gray-200 rounded-md mt-2 p-4 text-center group"
+          >
+            <span className="text-sm cursor-pointer group-hover:underline">
+              Add
+            </span>
+          </div>
+        </div>
 
         <div className="flex flex-col gap-1">
           <label htmlFor="name" className="text-sm font-medium">
@@ -127,9 +142,11 @@ export default function DiscountCreate({
           </label>
 
           <Select name="type" value={formData?.type || ""} onChange={onChange}>
+            <option value="" disabled>
+              Choose an option
+            </option>
             <option value="PERCENTAGE">Percentage</option>
             <option value="FIXED">Fixed</option>
-
           </Select>
         </div>
         <div className="flex flex-col gap-1">
@@ -160,7 +177,7 @@ export default function DiscountCreate({
                 "name",
                 "type",
                 "discount_amount",
-                "product",
+                "products",
               ])
             }
           >
@@ -172,6 +189,7 @@ export default function DiscountCreate({
           <EligibleDiscountProductSelect
             isOpen={isOpenVariantSelect}
             onClose={() => setIsOpenVariantSelect(!isOpen)}
+            prevSelectedProducts={formData?.product_data}
             onSave={(value) => onSave(value)}
           />
         )}

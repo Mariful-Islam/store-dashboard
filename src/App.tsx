@@ -20,6 +20,9 @@ import store from "./store";
 import "flowbite";
 import "react-multi-carousel/lib/styles.css";
 import ThemeProvider from "./contexts/ThemeContext";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import PasswordChange from "./pages/PasswordChange";
 
 function App() {
   return (
@@ -29,6 +32,12 @@ function App() {
           <GlobalProvider>
             <ToastProvider>
               <Routes>
+                
+                <Route path="login" element={<Login/>}/>
+                <Route path="signup" element={<Signup/>}/>
+                <Route path="password-change" element={<PasswordChange />}/>
+
+
                 <Route element={<RootLayout />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/products" element={<Products />} />

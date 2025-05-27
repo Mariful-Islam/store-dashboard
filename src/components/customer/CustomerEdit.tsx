@@ -55,7 +55,7 @@ function CustomerEdit({isOpen, onClose, data, refresh}: CustomerEditProps) {
   return (
     <Drawer isOpen={isOpen} onClose={onClose}>
        <div className='bg-white dark:bg-gray-800'>
-          <Form fields={fields} onChangeFields={onChangeFields} edit={data}/>
+          <Form fields={fields} onChangeFields={onChangeFields} edit={data} onClose={onClose} onSubmit={(e)=>console.log('hello')}/>
           
           <div className="flex gap-3 justify-end mt-4">
             <Button type="DangerOutline" onClick={onClose}>

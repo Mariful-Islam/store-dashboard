@@ -14,9 +14,11 @@ function PrintQRCode({isOpen, onClose, data}:PrintQRCodeProps) {
         isOpen={isOpen}
         onClose={onClose}
     >
-        <QRCodeCanvas
+        {/* <QRCodeCanvas
             
-        />
+        /> */}
+
+        <div>hello</div>
     </Modal>
   )
 }

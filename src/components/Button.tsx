@@ -29,7 +29,7 @@ function Button({
 }: OutlineButtonProps) {
   const [isHover, setIsHover] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
-  const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
+  const hoverTimeout = useRef<any>(null);
 
   const handleMouseEnter = () => {
     hoverTimeout.current = setTimeout(() => {

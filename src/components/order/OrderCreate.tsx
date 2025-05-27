@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/rootReducers";
 import { fetchProducts } from "../../redux/productsSlice";
 import { fetchCustomers } from "../../redux/userSlice";
-import Select from "react-select";
 import VariantSelect from "./VariantSelect";
 import Button from "../Button";
 import { RiDeleteBin7Line } from "react-icons/ri";

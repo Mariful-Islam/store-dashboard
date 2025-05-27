@@ -9,10 +9,16 @@ import TextInput from "../TextInput";
 interface VariantSelectProps {
   isOpen: boolean;
   onClose: VoidFunction;
+  prevSelectedProducts: any;
   onSave: (products: any) => void;
 }
 
-export function EligibleDiscountProductSelect({ isOpen, onClose, onSave }: VariantSelectProps) {
+export function EligibleDiscountProductSelect({
+  isOpen,
+  onClose,
+  prevSelectedProducts,
+  onSave,
+}: VariantSelectProps) {
   const api = useApi();
   const [prods, setProds] = useState<any>();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,31 +41,25 @@ export function EligibleDiscountProductSelect({ isOpen, onClose, onSave }: Varia
   };
 
   const handleSelectProduct = (product: any) => {
+    setSelectedProducts((prev) => {
+      const isAlreadySelected = prev?.some((prod) => prod?.id === product?.id);
 
-
-    setSelectedProducts(prev => {
-      const isAlreadySelected = prev?.some(prod => prod?.id === product?.id);
-      
       if (isAlreadySelected) {
         // Remove product
-        return prev.filter(preProd => preProd?.id !== product?.id);
+        return prev.filter((preProd) => preProd?.id !== product?.id);
       } else {
         // Add product
         return [...prev, product];
       }
     });
-
   };
-
-
 
   const handleAddProduct = () => {
     onSave(selectedProducts);
     onClose();
   };
 
-
-  console.log(selectedProducts)
+  console.log(selectedProducts, prevSelectedProducts);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
@@ -97,13 +97,20 @@ export function EligibleDiscountProductSelect({ isOpen, onClose, onSave }: Varia
             key={index}
             className="border border-gray-200 dark:border-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 duration-100 rounded-md p-2"
           >
-            <label className="flex gap-4 items-center">
+            <label
+              className={`flex gap-4 items-center ${
+                prevSelectedProducts?.some(
+                  (item: any) => item?.id === prod.id
+                ) && "text-gray-300"
+              }`}
+            >
               <input
                 type="checkbox"
-                className="duration-200 rounded-full focus:ring-0 focus:outline-0 focus:border-0 "
+                className={`duration-200 rounded-full focus:ring-0 focus:outline-0 focus:border-0`}
                 onChange={() => handleSelectProduct(prod)}
-                checked={selectedProducts.some(
-                  (item) => item?.id === prod?.id
+                checked={selectedProducts.some((item) => item?.id === prod?.id)}
+                disabled={prevSelectedProducts?.some(
+                  (item: any) => item?.id === prod.id
                 )}
               />
               <div className="flex flex-col gap-0">
@@ -113,7 +120,6 @@ export function EligibleDiscountProductSelect({ isOpen, onClose, onSave }: Varia
                 </span>
               </div>
             </label>
-
           </div>
         ))}
       </div>

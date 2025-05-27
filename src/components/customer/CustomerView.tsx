@@ -122,6 +122,7 @@ export function CustomerView({
             isOpen={orderView ? true : false}
             onClose={() => setOrderView(null)}
             id={orderView}
+            refresh={refresh}
           />
         )}
 

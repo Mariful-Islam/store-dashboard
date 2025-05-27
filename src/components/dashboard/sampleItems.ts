@@ -1,8 +1,8 @@
-import { ProductProps } from "./Product";
 
 
 
-export const products: ProductProps[] = [
+
+export const products: any[] = [
     {
       name: "SHoe",
       price: 29.99,

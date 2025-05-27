@@ -44,6 +44,14 @@ export const useApi = () => {
         createDiscount: (data:any) => interceptor.post(`${API_URL}/store/discount/api/discounts/`, data ),
         getDiscountDetail: (id:any) => interceptor.get(`${API_URL}/store/discount/api/discounts/${id}/`),
 
+        
+
+        // account
+
+        singup: (data:any) => interceptor.post(`${API_URL}/store/user/api/signup/`, data ),
+        login: (data:any) => interceptor.post(`${API_URL}/store/user/api/login/`, data ),
+        tokenVerify: (data) => interceptor.post(`${API_URL}/store/user/api/token/verify/`, data ),
+   
     }
     return api
 }

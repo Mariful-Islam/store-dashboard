@@ -8,7 +8,7 @@ const QRScanner = ({onScan}: {onScan: (value:any)=>void}) => {
   const [scanned, setScannedText] = useState('');
 
   useEffect(() => {
-    const video: HTMLVideoElement = videoElementRef.current;
+    const video:any = videoElementRef.current;
     const qrScanner = new QrScanner(
       video,
       (result) => {

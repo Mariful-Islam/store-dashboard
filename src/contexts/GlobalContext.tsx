@@ -29,7 +29,20 @@ const GlobalProvider = ({ children }: { children: any }) => {
   const handleFormValidation = (formData: any, fields: string[]): boolean => {
     return fields.every((field) => {
       const value = formData?.[field];
-      return value !== null && value !== undefined && value !== "";
+      if (value === null || value === undefined) return false;
+
+      // Check for empty string
+      if (typeof value === "string" && value.trim() === "") return false;
+  
+      // Check for empty array
+      if (Array.isArray(value) && value.length === 0) return false;
+  
+      // Check for empty object
+      if (typeof value === "object" && !Array.isArray(value) && Object.keys(value).length === 0) {
+        return false;
+      }
+  
+      return true;
     });
   };
 
