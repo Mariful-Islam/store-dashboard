@@ -49,7 +49,7 @@ export default function Paginator({ data }: { data: any }) {
           <div>
             <nav
               aria-label="Pagination"
-              className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+              className="isolate flex flex-wrap -space-x-px rounded-md"
             >
               <button
                 disabled={data?.prev_page_link ? false : true}

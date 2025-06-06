@@ -74,7 +74,8 @@ const GlobalProvider = ({ children }: { children: any }) => {
         filter,
         handleFilter,
         handleSearch,
-        handleSelectItemPerPage
+        handleSelectItemPerPage,
+        searchParams
       }}
     >
       {children}

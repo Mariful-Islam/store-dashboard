@@ -22,7 +22,7 @@ export default function Cards({ data }: CardsProps) {
       {
           label: "Order",
           icon: <MdOutlineSell className="text-blue-500 dark:text-blue-100"/>,
-          value: data?.totol_order
+          value: data?.total_orders
       },
       {
           label: "Product", 
@@ -49,7 +49,7 @@ export default function Cards({ data }: CardsProps) {
         <div key={index} className="p-4 border border-slate-200 dark:border-slate-600 rounded-md bg-white dark:bg-slate-900">
           <div className="flex flex-col gap-3">
             <div className="flex gap-2 items-center">
-              <div className="bg-blue-100 dark:bg-blue-950 w-fit rounded-full p-2">
+              <div className="bg-blue-50 dark:bg-blue-950 w-fit rounded-full p-2">
                 {item.icon}
               </div>
               <div className="text-blue-500 font-bold dark:text-blue-100">{item.label}</div>

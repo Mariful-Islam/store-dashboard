@@ -53,7 +53,7 @@ export default function Home() {
       {/* <Table columns={[]} data={[]}/> */}
       <div className=" mt-4">
         <div>
-          <SellsChart data={data?.sells}/>
+          <SellsChart />
         </div>
         <div className="mt-4">
           <TopSellingProducts data={data?.top_selling_products || []}/>

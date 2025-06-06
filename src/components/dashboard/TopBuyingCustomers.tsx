@@ -1,4 +1,3 @@
-import ZingChart from 'zingchart-react';
 import Table from '../Table';
 import { users } from './sampleItems';
 
