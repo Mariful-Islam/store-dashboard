@@ -103,16 +103,16 @@ export default function ProductCreate({ isOpen, onClose }: ProductCreateProps) {
           />
         </div>
         <div className="flex gap-3 justify-end">
-          <Button type="DangerOutline" onClick={onClose}>
+          <Button btntype="DangerOutline" onClick={onClose}>
             Cancel
           </Button>
 
           <Button
-            type="Normal"
-            submit
+            btntype="Normal"
+            type="submit"
             className="flex gap-2 items-center duration-200"
             
-            disable={!handleFormValidation(formData, [
+            disabled={!handleFormValidation(formData, [
               "name",
               "description",
               "slug",

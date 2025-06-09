@@ -149,11 +149,11 @@ export default function VariantForm({isOpen, onClose, productId,  refresh}: Vari
                         </div>
                     ))}
                 </div>
-                <Button type='Outline' onClick={handleAddAttr} className='mt-3 flex justify-center w-full'>+</Button>
+                <Button btntype='Outline' onClick={handleAddAttr} className='mt-3 flex justify-center w-full'>+</Button>
             </div>
             <div className='mt-4 flex items-center justify-end gap-4'>
-                <Button onClick={onClose} type="DangerOutline">Back</Button>
-                <Button onClick={onSubmit} type="Normal">Create</Button>
+                <Button onClick={onClose} btntype="DangerOutline">Back</Button>
+                <Button onClick={onSubmit} btntype="Normal">Create</Button>
 
             </div>
         </form>

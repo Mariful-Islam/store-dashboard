@@ -336,10 +336,10 @@ export default function OrderCreate({
             </div>
 
             <div className="flex items-center justify-end gap-3 mt-6">
-              <Button type="DangerOutline" onClick={onClose}>
+              <Button btntype="DangerOutline" onClick={onClose}>
                 Back
               </Button>
-              <Button type="Normal" onClick={onSubmit} disable={!handleFormValidation(formData, ['customer_name', 'retailer_name', 'variant_payload'])}>
+              <Button btntype="Normal" onClick={onSubmit} disabled={!handleFormValidation(formData, ['customer_name', 'retailer_name', 'variant_payload'])}>
                 Create
               </Button>
             </div>

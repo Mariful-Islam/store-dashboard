@@ -80,8 +80,8 @@ export default function OrderFilter({isOpen, onClose}: OrderFilterProps) {
 
 
       <div className='mt-6 flex justify-end items-center gap-4'>
-        <Button type='DangerOutline' onClick={onClose}>Cancel</Button>
-        <Button type='Normal' onClick={onApply}>Apply</Button>
+        <Button btntype='DangerOutline' onClick={onClose}>Cancel</Button>
+        <Button btntype='Normal' onClick={onApply}>Apply</Button>
       </div>
     </Modal>
   )

@@ -239,10 +239,10 @@ function SellFilterModal({ isOpen, onClose }: SellFilterModalProps) {
           </button>
 
           <div className="flex justify-end gap-4 ">
-            <Button type="DangerOutline" onClick={onClose}>
+            <Button btntype="DangerOutline" onClick={onClose}>
               Cancel
             </Button>
-            <Button type="Normal" onClick={handleApply}>
+            <Button btntype="Normal" onClick={handleApply}>
               Apply
             </Button>
           </div>

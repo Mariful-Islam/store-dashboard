@@ -29,6 +29,7 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5",
     "react-to-print": "^3.0.5",
+    "react-tooltip": "^5.28.1",
     "recharts": "^2.15.3",
     "zingchart-react": "^3.2.0"
   },

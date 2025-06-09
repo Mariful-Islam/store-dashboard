@@ -23,6 +23,9 @@ import ThemeProvider from "./contexts/ThemeContext";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import PasswordChange from "./pages/PasswordChange";
+import 'react-tooltip/dist/react-tooltip.css'
+
+
 
 function App() {
   return (

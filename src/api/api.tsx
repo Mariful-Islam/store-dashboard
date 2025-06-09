@@ -9,6 +9,8 @@ export const useApi = () => {
         getDashboard: (params={}) => interceptor.get(`${API_URL}/store/dashboard/api/dashboard/counter/`, {params: params}),
         getSalesData: (params={}) => interceptor.get(`${API_URL}/store/dashboard/api/dashboard/sales/`, {params: params}),
         getTopSellingProductVariant: (params={}) => interceptor.get(`${API_URL}/store/dashboard/api/dashboard/top-selling-variant/`, {params: params}),
+        getTopCutomers: (params={}) => interceptor.get(`${API_URL}/store/dashboard/api/dashboard/top-customers/`, {params: params}),
+        getTopRetailers: (params={}) => interceptor.get(`${API_URL}/store/dashboard/api/dashboard/top-retailers/`, {params: params}),
 
 
         getProducts: (params={}) => interceptor.get(`${API_URL}/store/product/api/products/`, {params: params}),

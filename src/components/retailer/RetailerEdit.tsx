@@ -59,13 +59,13 @@ export function RetailerEdit({
       <div className="bg-white dark:bg-gray-800">
         <Form fields={fields} onChangeFields={onChangeFields} edit={data} onSubmit={()=>console.log('cfvfd')} onClose={onClose} />
         <div className="flex gap-3 justify-end mt-4">
-          <Button type="DangerOutline" onClick={onClose}>
+          <Button btntype="DangerOutline" onClick={onClose}>
             Cancel
           </Button>
 
           <Button
-            type="Normal"
-            submit
+            btntype="Normal"
+            type="submit"
             className="flex gap-2 items-center duration-200"
             onClick={onUpdate}
           >

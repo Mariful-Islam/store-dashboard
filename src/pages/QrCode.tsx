@@ -9,6 +9,7 @@ import Wrapper from "../components/Wrapper";
 import Select from "../components/Select";
 import { GlobalContext } from "../contexts/GlobalContext";
 import Button from "../components/Button";
+import { Tooltip } from "react-tooltip";
 
 export default function QrCode() {
   const api = useApi();
@@ -45,16 +46,19 @@ export default function QrCode() {
       <div className="mb-2 flex justify-between items-center">
         <h3 className="font-bold">Variant Qr Code</h3>
         <Button
-          type="white-btn"
-          hoverText="Print Variant Qr COde"
-          hoverTextAlignClass="-left-[200px]"
+          btntype="white-btn"
           className="hover:text-blue-500"
+          data-tooltip-id={`print-variants-qr-code`} 
+          data-tooltip-content={'Print Variants QR Code'}
+
         >
           <FiPrinter
             className=" hover:text-blue-500 duration-200 w-6 h-6 cursor-pointer"
             onClick={() => reactToPrintFn()}
           />
         </Button>
+        <Tooltip id={`print-variants-qr-code`} place="bottom" style={{fontSize: 12, fontWeight: 'bold'}}/>
+
       </div>
       <Wrapper>
         <div className="flex gap-4 items-center justify-between w-full text-[12px]">

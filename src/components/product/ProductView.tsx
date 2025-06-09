@@ -96,7 +96,7 @@ function ProductView({ isOpen, onClose, slug }: ProductViewProps) {
         </div>
         <div className="flex justify-between items-center">
           <h1 className="text-slate-800 dark:text-slate-50 font-bold">Variants</h1>
-          <Button onClick={()=>setVariantForm(true)} type="Outline">
+          <Button onClick={()=>setVariantForm(true)} btntype="Outline">
             + {" "} Add variant
           </Button>
         </div>

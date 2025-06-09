@@ -64,7 +64,7 @@ function Signup() {
             </Link>
           </div>
 
-          <Button type="Outline" className="mt-5 w-full py-2" submit>
+          <Button btntype="Outline" className="mt-5 w-full py-2" submit>
             Sign Up
           </Button>
 

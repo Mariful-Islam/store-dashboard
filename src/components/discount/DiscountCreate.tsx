@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import Modal from "../Modal";
 import Button from "../Button";
 import { useApi } from "../../api/api";
-import { useNavigate } from "react-router-dom";
 import TextInput from "../TextInput";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import { EligibleDiscountProductSelect } from "./EligibleDiscountProductSelect";
@@ -26,7 +25,6 @@ export default function DiscountCreate({
   const [isOpenVariantSelect, setIsOpenVariantSelect] =
     useState<boolean>(false);
 
-  const navigate = useNavigate();
 
   const onChange = (e: any) => {
     const { name, value } = e.target;
@@ -164,15 +162,15 @@ export default function DiscountCreate({
         </div>
 
         <div className="flex gap-3 justify-end">
-          <Button type="DangerOutline" onClick={onClose}>
+          <Button btntype="DangerOutline" onClick={onClose}>
             Cancel
           </Button>
 
           <Button
-            type="Normal"
-            submit
+            btntype="Normal"
+            type="submit"
             className="flex gap-2 items-center duration-200"
-            disable={
+            disabled={
               !handleFormValidation(formData, [
                 "name",
                 "type",

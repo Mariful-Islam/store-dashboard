@@ -121,10 +121,10 @@ function Form({ fields, onChangeFields, edit, onClose, onSubmit, submitBtnName }
         )}})}
 
         <div className="mt-4 flex gap-4 justify-end">
-          <Button type="DangerOutline" onClick={onClose}>
+          <Button btntype="DangerOutline" onClick={onClose}>
             Cancel
           </Button>
-          <Button type="Normal" submit disable={!handleFormValidation(formData, fields)}>
+          <Button btntype="Normal" type="submit" disabled={!handleFormValidation(formData, fields)}>
             {loading ? <div className="spinner"></div> : <div>{submitBtnName ? submitBtnName : 'Submit'}</div> }
           </Button>
         </div>

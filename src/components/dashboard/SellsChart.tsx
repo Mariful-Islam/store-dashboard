@@ -16,12 +16,14 @@ import { CiFilter } from "react-icons/ci";
 import SellFilterModal from "./SellFilterModal";
 import { GlobalContext } from "../../contexts/GlobalContext";
 import moment from "moment";
+import { Tooltip as ReactToolTip } from "react-tooltip";
+
+
 
 export default function SellsChart() {
   const api = useApi();
   const [formatData, setFormatData] = useState<any>();
-  const {filter, handleFilter, searchParams} = useContext(GlobalContext)
-  
+  const { filter, handleFilter, searchParams } = useContext(GlobalContext);
 
   const fetchSaleData = (searchParams: any) => {
     api
@@ -40,31 +42,38 @@ export default function SellsChart() {
     ([key, value]) => ({ label: key, total_sales: value })
   );
 
-
-
-
   return (
     <div className=" bg-white p-4 border border-slate-200 dark:border-slate-600 rounded-md dark:bg-slate-900">
-      <h2 className="text-lg font-bold text-center mb-4">
-        Total Sales
-      </h2>
+      <h3 className="font-bold text-center mb-4">Total Sales</h3>
 
       <div className="flex gap-4 items-center">
-        <Button type="white-btn" hoverText="Sale Filter" onClick={handleFilter}>
-          <CiFilter className="w-5 h-5"/> 
+        <Button
+          btntype="white-btn"
+          onClick={handleFilter}
+          data-tooltip-id={`filter`}
+          data-tooltip-content={"Filter"}
+        >
+          <CiFilter className="w-5 h-5" />
         </Button>
 
+        <ReactToolTip id={`filter`} place="top" style={{fontSize: 12, fontWeight: 'bold'}}/>
+
         <div>
-          {searchParams.get('date') && moment(searchParams.get('date')).format('DD MMM YYYY')}
-          {searchParams.get('month') && moment(searchParams.get('month')).format('MMMM YYYY')}
-          {(searchParams.get('start_date') || searchParams.get('end_date')) && (
+          {searchParams.get("date") &&
+            moment(searchParams.get("date")).format("DD MMM YYYY")}
+          {searchParams.get("month") &&
+            moment(searchParams.get("month")).format("MMMM YYYY")}
+          {(searchParams.get("start_date") || searchParams.get("end_date")) && (
             <div className="flex gap-4">
-              <div>{moment(searchParams.get('start_date')).format('DD MMMM YYYY')}</div>
+              <div>
+                {moment(searchParams.get("start_date")).format("DD MMMM YYYY")}
+              </div>
               <div>-</div>
-              <div>{moment(searchParams.get('end_date')).format('DD MMMM YYYY')}</div>
+              <div>
+                {moment(searchParams.get("end_date")).format("DD MMMM YYYY")}
+              </div>
             </div>
           )}
-
         </div>
       </div>
 
@@ -85,18 +94,12 @@ export default function SellsChart() {
               dataKey="total_sales"
               stroke="blue"
               activeDot={{ r: 8 }}
-              
             />
           </LineChart>
         </ResponsiveContainer>
       </div>
 
-      {filter && (
-        <SellFilterModal 
-          isOpen={filter} 
-          onClose={handleFilter}
-        />
-      )}
+      {filter && <SellFilterModal isOpen={filter} onClose={handleFilter} />}
     </div>
   );
 }

@@ -2,11 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import Wrapper from "../components/Wrapper";
 import Button from "../components/Button";
 import { GlobalContext } from "../contexts/GlobalContext";
-import { MdDelete, MdOutlineClear } from "react-icons/md";
-import { IoEyeOutline, IoFilterOutline } from "react-icons/io5";
-import DropdownMenu from "../components/DropdownMenu";
-import { CiEdit, CiFilter } from "react-icons/ci";
-import TextInput from "../components/TextInput";
+import { MdDelete } from "react-icons/md";
+import { IoEyeOutline } from "react-icons/io5";
+import { CiEdit } from "react-icons/ci";
 import { useSearchParams } from "react-router-dom";
 import Table from "../components/Table";
 import Select from "../components/Select";
@@ -17,6 +15,7 @@ import DiscountCreate from "../components/discount/DiscountCreate";
 import { DiscountEdit } from "../components/discount/DiscountEdit";
 import { DiscountView } from "../components/discount/DiscountView";
 import DiscountFilter from "../components/discount/DiscountFilter";
+import SearchFilter from "../components/SearchFilter";
 
 function Discount() {
   const api = useApi();
@@ -26,12 +25,9 @@ function Discount() {
   const [dlt, setDlt] = useState<any>(null);
   const [create, setCreate] = useState<any>(null);
   const [searchParams, setSearchParams] = useSearchParams({ pages: "10" });
-  const [search, setSearch] = useState<string>();
   const {
     filter,
-    handleClear,
     handleFilter,
-    handleSearch,
     handleSelectItemPerPage,
   } = useContext(GlobalContext);
 
@@ -39,10 +35,6 @@ function Discount() {
   const onCloseProductCreate = () => {
     setCreate(false);
     fetchDiscounts(searchParams);
-  };
-
-  const getActiveMenu = (orderName: string) => {
-    return searchParams.get("ordering") === orderName;
   };
 
   const columns = [
@@ -92,69 +84,33 @@ function Discount() {
     [
       {
         label: "Name - ascending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "name");
-            return newParams;
-          }),
-        isActive: getActiveMenu("name"),
+        key: "name"
       },
       {
         label: "Name - descending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "-name");
-            return newParams;
-          }),
-        isActive: getActiveMenu("-name"),
+        key: "-name"
       },
     ],
 
     [
       {
         label: "Price - ascending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "variants__price");
-            return newParams;
-          }),
-        isActive: getActiveMenu("variants__price"),
+        key: "variants__price"
       },
       {
         label: "Price - descending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "-variants__price");
-            return newParams;
-          }),
-        isActive: getActiveMenu("-variants__price"),
+        key: "-variants__price"
       },
     ],
 
     [
       {
         label: "Created - ascending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "created_at");
-            return newParams;
-          }),
-        isActive: getActiveMenu("created_at"),
+        key: "created_at"
       },
       {
         label: "Created - descending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "-created_at");
-            return newParams;
-          }),
-        isActive: getActiveMenu("-created_at"),
+        key: "-created_at"
       },
     ],
   ];
@@ -176,54 +132,10 @@ function Discount() {
     <div>
       <div className="flex justify-between mb-2">
         <h3 className="font-bold">Discount</h3>
-        <Button type="Normal" onClick={()=>setCreate(!create)}>Create Discount</Button>
+        <Button btntype="Normal" onClick={()=>setCreate(!create)}>Create Discount</Button>
       </div>
 
-      <Wrapper className="mb-2 flex flex-col">
-        <div className="flex flex-row justify-between items-center gap-4 w-full">
-          <TextInput
-            id="search"
-            name="search"
-            placeholder="search product"
-            value={search}
-            onChange={handleSearch}
-          />
-
-          <Button type="white-btn" hoverText="filter" onClick={handleFilter}>
-            <CiFilter className="w-5 min-w-5 h-5 min-h-5" />
-          </Button>
-
-          <DropdownMenu
-            buttonLabel={
-              <Button type="white-btn" hoverText="Sort">
-                <IoFilterOutline className="w-5 min-w-5 h-5 min-h-5" />
-              </Button>
-            }
-            items={menuGroups}
-          />
-          <Button type="white-btn" onClick={handleClear} hoverText="Clear">
-            <MdOutlineClear className="w-5 h-5" />
-          </Button>
-        </div>
-        <div className="flex gap-4 items-center justify-between w-full text-[12px]">
-          <div>
-            <strong className="text-gray-500 dark:text-gray-200">
-              Items:{" "}
-            </strong>
-            <strong className="text-gray-700 dark:text-gray-200">
-              {discounts?.results?.length}
-            </strong>
-          </div>
-          <div>
-            <strong className="text-gray-500 dark:text-gray-200">
-              Total:{" "}
-            </strong>
-            <strong className="text-gray-700 dark:text-gray-200">
-              {discounts?.count}
-            </strong>
-          </div>
-        </div>
-      </Wrapper>
+      <SearchFilter data={discounts} menuGroupsItems={menuGroups} />
 
       <Table columns={columns as any} data={discounts} />
 

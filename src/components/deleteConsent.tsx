@@ -47,8 +47,8 @@ export default function DeleteConsent({
         <MdDelete  className="w-10 h-10 text-red-500"/>
       </div>
       <div className="flex gap-6 justify-end">
-        <Button type="Outline" onClick={onClose}>Cancel</Button>
-        <Button type="Danger" onClick={deleteItem}>Delete</Button>
+        <Button btntype="Outline" onClick={onClose}>Cancel</Button>
+        <Button btntype="Danger" onClick={deleteItem}>Delete</Button>
       </div>
     </Modal>
   );

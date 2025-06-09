@@ -15,6 +15,7 @@ import Select from "../components/Select";
 import { MdOutlineClear } from "react-icons/md";
 import { GlobalContext } from "../contexts/GlobalContext";
 import DropdownMenu from "../components/DropdownMenu";
+import SearchFilter from "../components/SearchFilter";
 
 
 export default function Customers() {
@@ -69,49 +70,12 @@ export default function Customers() {
     <div>
       <div className="flex justify-between mb-2">
         <h3 className="font-bold">Customers</h3>
-        <Button type="Normal" onClick={() => setCustomerCreate(true)}>
+        <Button btntype="Normal" onClick={() => setCustomerCreate(true)}>
           Create Customer
         </Button>
       </div>
 
-      <Wrapper style={{ gap: 12 }} className="mb-2 flex flex-col">
-        <div className="flex flex-row justify-between items-center gap-4 w-full">
-          <TextInput
-            id="search"
-            name="search"
-            placeholder="Search customers"
-            value={search}
-            onChange={handleSearch}
-          />
-
-          <Button type="white-btn" hoverText="filter" onClick={handleFilter}>
-            <CiFilter className="w-5 min-w-5 h-5 min-h-5" />
-          </Button>
-          <DropdownMenu
-            buttonLabel={
-              <Button type="white-btn" hoverText="Sort">
-                <IoFilterOutline className="w-5 min-w-5 h-5 min-h-5" />
-              </Button>
-            }
-            items={[]}
-          />
-          <Button type="white-btn" onClick={handleClear} hoverText="Clear">
-            <MdOutlineClear className="w-5 h-5" />
-          </Button>
-        </div>
-        <div className="flex gap-4 items-center justify-between w-full text-[12px]">
-          <div>
-            <strong className="text-gray-500 dark:text-gray-200">Items: </strong>
-            <strong className="text-gray-700 dark:text-gray-200">
-              {customers?.results?.length}
-            </strong>
-          </div>
-          <div>
-            <strong className="text-gray-500 dark:text-gray-200">Total: </strong>
-            <strong className="text-gray-700 dark:text-gray-200">{customers?.count}</strong>
-          </div>
-        </div>
-      </Wrapper>
+      <SearchFilter data={customers} menuGroupsItems={[]}/>
 
       <Table columns={columns as any} data={customers} />
 

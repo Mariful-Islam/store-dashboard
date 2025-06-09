@@ -82,8 +82,8 @@ function VariantSelect({ isOpen, onClose, onSave }: VariantSelectProps) {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">
       <div className="flex justify-end items-center gap-3 mb-2">
-        <Button onClick={onClose} type="DangerOutline">Back</Button>
-        <Button onClick={handleAddProduct} type="Normal" disable={selectedProducts.length === 0 ? true : false}>Add</Button>
+        <Button onClick={onClose} btntype="DangerOutline">Back</Button>
+        <Button onClick={handleAddProduct} btntype="Normal" disabled={selectedProducts.length === 0 ? true : false}>Add</Button>
       </div>
       
         <TextInput

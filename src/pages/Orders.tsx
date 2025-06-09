@@ -16,6 +16,7 @@ import Select from "../components/Select";
 import OrderFilter from "../components/order/OrderFilter";
 import DropdownMenu from "../components/DropdownMenu";
 import { GlobalContext } from "../contexts/GlobalContext";
+import SearchFilter from "../components/SearchFilter";
 
 export default function Orders() {
   const api = useApi();
@@ -24,8 +25,13 @@ export default function Orders() {
   const [orderCreate, setOrderCreate] = useState<any>(null);
   const [searchParams, setSearchParams] = useSearchParams({ pages: "10" });
   const [search, setSearch] = useState<string>();
-  const {filter, handleClear, handleFilter, handleSearch, handleSelectItemPerPage} = useContext(GlobalContext)
-  
+  const {
+    filter,
+    handleClear,
+    handleFilter,
+    handleSearch,
+    handleSelectItemPerPage,
+  } = useContext(GlobalContext);
 
   const columns = [
     {
@@ -111,54 +117,27 @@ export default function Orders() {
     fetchOrders(searchParams);
   }, [searchParams]);
 
-  const getActiveMenu = (orderName: string) => {
-    return searchParams.get("ordering") === orderName;
-  };
 
   const menuGroups = [
     [
       {
         label: "Total price - ascending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "total_price");
-            return newParams;
-          }),
-        isActive: getActiveMenu("total_price"),
+        key: "total_price",
       },
       {
         label: "Total price - descending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "-total_price");
-            return newParams;
-          }),
-        isActive: getActiveMenu("-total_price"),
+        key: "-total_price",
       },
     ],
 
     [
       {
         label: "Created - ascending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "created_at");
-            return newParams;
-          }),
-        isActive: getActiveMenu("created_at"),
+        key: "created_at",
       },
       {
         label: "Created - descending",
-        onClick: () =>
-          setSearchParams((prev) => {
-            const newParams = new URLSearchParams(prev);
-            newParams.set("ordering", "-created_at");
-            return newParams;
-          }),
-        isActive: getActiveMenu("-created_at"),
+        key: "-created_at",
       },
     ],
   ];
@@ -167,49 +146,12 @@ export default function Orders() {
     <div>
       <div className="flex justify-between mb-2">
         <h3 className="font-bold">Orders</h3>
-        <Button type="Normal" onClick={() => setOrderCreate(true)}>
+        <Button btntype="Normal" onClick={() => setOrderCreate(true)}>
           Create Order
         </Button>
       </div>
 
-      <Wrapper style={{ gap: 12 }} className="mb-2 flex flex-col">
-        <div className="flex flex-row justify-between items-center gap-4 w-full">
-          <TextInput
-            id="search"
-            name="search"
-            placeholder="Search orders"
-            value={search}
-            onChange={handleSearch}
-          />
-
-          <Button type="white-btn" hoverText="filter" onClick={handleFilter}>
-            <CiFilter className="w-5 min-w-5 h-5 min-h-5" />
-          </Button>
-          <DropdownMenu
-            buttonLabel={
-              <Button type="white-btn" hoverText="Sort">
-                <IoFilterOutline className="w-5 min-w-5 h-5 min-h-5" />
-              </Button>
-            }
-            items={menuGroups}
-          />
-          <Button type="white-btn" onClick={handleClear} hoverText="Clear">
-            <MdOutlineClear className="w-5 h-5" />
-          </Button>
-        </div>
-        <div className="flex gap-4 items-center justify-between w-full text-[12px]">
-          <div>
-            <strong className="text-gray-500 dark:text-gray-200">Items: </strong>
-            <strong className="text-gray-700 dark:text-gray-200">
-              {orders?.results?.length}
-            </strong>
-          </div>
-          <div>
-            <strong className="text-gray-500 dark:text-gray-200">Total: </strong>
-            <strong className="text-gray-700 dark:text-gray-200">{orders?.count}</strong>
-          </div>
-        </div>
-      </Wrapper>
+      <SearchFilter data={orders} menuGroupsItems={menuGroups} />
 
       <Table columns={columns as any} data={orders} />
 
@@ -251,9 +193,7 @@ export default function Orders() {
         />
       )}
 
-      {filter && (
-        <OrderFilter isOpen={filter} onClose={handleFilter} />
-      )}
+      {filter && <OrderFilter isOpen={filter} onClose={handleFilter} />}
     </div>
   );
 }
