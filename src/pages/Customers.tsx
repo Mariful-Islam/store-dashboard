@@ -16,6 +16,7 @@ import { MdOutlineClear } from "react-icons/md";
 import { GlobalContext } from "../contexts/GlobalContext";
 import DropdownMenu from "../components/DropdownMenu";
 import SearchFilter from "../components/SearchFilter";
+import { useToast } from "../contexts/Notification";
 
 
 export default function Customers() {
@@ -27,13 +28,17 @@ export default function Customers() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState<string>();
   const {filter, handleClear, handleFilter, handleSearch, handleSelectItemPerPage} = useContext(GlobalContext)
-  
+  const {addToast} = useToast()
 
   const columns = [
     { label: "ID", accessor: "id" },
     // { label: "Created", accessor: "created_at" },
     // { label: "Phone", accessor: "updated_at" },
-    { label: "Name", accessor: "username" },
+    { label: "Name", accessor: "", render: (item:any)=>(
+      <div>
+        {item?.first_name} {item?.last_name}
+      </div>
+    ) },
     { label: "Phone", accessor: "phone" },
     { label: "Email", accessor: "email" },
 
@@ -59,7 +64,7 @@ export default function Customers() {
       .then((response) => {
         setCustomers(response.data);
       })
-      .catch(() => console.log("Erorr"));
+      .catch(() => addToast("Error", "error"));
   };
 
   useEffect(() => {
@@ -109,12 +114,7 @@ export default function Customers() {
           refresh={fetchCustomers}
         />
       )}
-      {customerEdit && (
-        <ProductEdit
-          isOpen={customerEdit ? true : false}
-          onClose={() => setCustomerEdit(null)}
-        />
-      )}
+
       {customerCreate && (
         <CustomerCreate
           isOpen={customerCreate}

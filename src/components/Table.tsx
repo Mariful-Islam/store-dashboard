@@ -32,6 +32,7 @@ const Table = ({ columns, data }: TableProps) => {
               <th
                 key={index}
                 className="py-2 px-4 border-b border-slate-200 dark:border-slate-600 font-medium text-left text-nowrap"
+              
               >
                 {column.label}
               </th>

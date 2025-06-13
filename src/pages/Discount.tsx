@@ -12,7 +12,6 @@ import Paginator from "../components/Paginator";
 import { useApi } from "../api/api";
 import DeleteConsent from "../components/deleteConsent";
 import DiscountCreate from "../components/discount/DiscountCreate";
-import { DiscountEdit } from "../components/discount/DiscountEdit";
 import { DiscountView } from "../components/discount/DiscountView";
 import DiscountFilter from "../components/discount/DiscountFilter";
 import SearchFilter from "../components/SearchFilter";
@@ -21,7 +20,6 @@ function Discount() {
   const api = useApi();
   const [discounts, setDiscounts] = useState<any>();
   const [view, setView] = useState<any>(null);
-  const [edit, setEdit] = useState<any>(null);
   const [dlt, setDlt] = useState<any>(null);
   const [create, setCreate] = useState<any>(null);
   const [searchParams, setSearchParams] = useSearchParams({ pages: "10" });
@@ -130,7 +128,7 @@ function Discount() {
       </div>
 
       <SearchFilter data={discounts} menuGroupsItems={menuGroups} />
-
+      
       <Table columns={columns as any} data={discounts} />
 
       <Wrapper className="mt-2">
@@ -160,12 +158,7 @@ function Discount() {
             id={view}
           />
         )}
-        {/* {edit && (
-          <DiscountEdit
-            isOpen={edit ? true : false}
-            onClose={() => setEdit(null)}
-          />
-        )} */}
+
         {create && (
           <DiscountCreate
             isOpen={create}

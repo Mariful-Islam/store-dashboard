@@ -99,7 +99,7 @@ export default function DiscountCreate({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Create product">
+    <Modal isOpen={isOpen} onClose={onClose} title="Discount Create">
       <form className="flex flex-col gap-4" onSubmit={onSubmit}>
         <div className="text-sm font-medium mt-4">
           Select discount eligible product

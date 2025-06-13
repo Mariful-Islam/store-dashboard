@@ -58,7 +58,7 @@ function Invoice({ data, ref }: InvoiceProps) {
   return (
     <div ref={ref} className="p-8 hidden print:block">
       <h1 className="text-3xl">Store</h1>
-      <div className="flex justify-between mt-6 gap-2">
+      <div className="flex justify-between mt-6 gap-12">
         <div>
           <h1 className="border-b">Retailer</h1>
           <div className="mt-1">

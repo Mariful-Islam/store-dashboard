@@ -5,6 +5,8 @@ import Table from "../Table";
 import { OrderView } from "../order/OrderView";
 import { IoEyeOutline } from "react-icons/io5";
 import { RetailerEdit } from "./RetailerEdit";
+import { CiEdit } from "react-icons/ci";
+import { Tooltip } from "react-tooltip";
 
 interface CustomerViewProps {
   isOpen: boolean;
@@ -13,7 +15,12 @@ interface CustomerViewProps {
   refresh: VoidFunction;
 }
 
-export function RetailerView({ isOpen, onClose, id, refresh }: CustomerViewProps) {
+export function RetailerView({
+  isOpen,
+  onClose,
+  id,
+  refresh,
+}: CustomerViewProps) {
   const api = useApi();
   const [retailer, setRetailer] = useState<any>(null);
   const [orderView, setOrderView] = useState<any>(null);
@@ -73,39 +80,51 @@ export function RetailerView({ isOpen, onClose, id, refresh }: CustomerViewProps
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title="Retailer Detail">
       <div className="bg-white dark:bg-gray-800 text-slate-800 dark:text-slate-200">
-        <div className="border border-slate-300 dark:border-slate-700 p-4 rounded-md mb-4">
-          <div className="flex justify-end">
-            <button className="text-blue-500 cursor-pointer hover:underline" onClick={() => setRetailerEdit(retailer)}>
-              Edit
-            </button>
-          </div>
+        <div className="flex justify-between items-start text-sm border border-slate-300 dark:border-slate-700 p-4 rounded-md mb-4">
+
           <div>
             <div className="flex gap-2">
-              <div>ID: </div>
+              <strong>ID: </strong>
               <div>{retailer?.id}</div>
             </div>
             <div className="flex gap-2">
-              <div>Name: </div>
+              <strong>Name: </strong>
               <div>
                 {retailer?.first_name} {retailer?.last_name}
               </div>
             </div>
             <div className="flex gap-2">
-              <div>UserName: </div>
+              <strong>UserName: </strong>
               <div> {retailer?.username}</div>
             </div>
             <div className="flex gap-2">
-              <div>Phone: </div>
+              <strong>Phone: </strong>
               <div>{retailer?.phone}</div>
             </div>
             <div className="flex gap-2">
-              <div>Email: </div>
+              <strong>Email: </strong>
               <div>{retailer?.email}</div>
             </div>
           </div>
+
+          <button
+            className=" hover:text-blue-500"
+            onClick={() => setRetailerEdit(retailer)}
+            data-tooltip-id={`product_edit`}
+            data-tooltip-content={"Product Edit"}
+          >
+            <CiEdit className="w-5 h-5" />
+          </button>
+          <Tooltip
+            id={`product_edit`}
+            place="left"
+            style={{ fontSize: 12, fontWeight: "bold" }}
+          />
         </div>
 
-        { retailer?.orders?.length !==0 && <Table columns={columns} data={retailer?.orders} /> }
+        {retailer?.orders?.length !== 0 && (
+          <Table columns={columns} data={retailer?.orders} />
+        )}
 
         {orderView && (
           <OrderView
@@ -121,9 +140,9 @@ export function RetailerView({ isOpen, onClose, id, refresh }: CustomerViewProps
             isOpen={retailerEdit ? true : false}
             onClose={() => setRetailerEdit(null)}
             data={retailerEdit}
-            refresh={()=>{
-              fetchRetailer()
-              refresh()
+            refresh={() => {
+              fetchRetailer();
+              refresh();
             }}
           />
         )}

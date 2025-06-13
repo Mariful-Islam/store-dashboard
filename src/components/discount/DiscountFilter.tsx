@@ -33,7 +33,7 @@ export default function DiscountFilter({isOpen, onClose}: ProductViewProps) {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title='Product Filter'>
+    <Modal isOpen={isOpen} onClose={onClose} title='Discount Filter'>
       <div className='flex gap-3 items-center'>
         <div>
             <Label htmlFor='name'>Product Name</Label>

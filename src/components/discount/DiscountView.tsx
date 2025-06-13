@@ -96,15 +96,16 @@ export function DiscountView({ isOpen, onClose, id }: ProductViewProps) {
       label: "",
       accessor: "",
       render: (item: any) => (
-        <button onClick={() => removeEligibleProduct(item?.id)}>
-          <RiDeleteBin7Line className="hover:text-red-500 text-gray-700" />
-        </button>
+        <div className="flex justify-center items-center">
+          <button onClick={() => removeEligibleProduct(item?.id)}>
+            <RiDeleteBin7Line className="hover:text-red-500 text-gray-700" />
+          </button>
+        </div>
       ),
     },
   ];
 
   const onUpdateElogibleProducts = (products: any) => {
-
     const updatedEligibleProducts = [
       ...formData.products,
       ...products.map((product: any) => product?.id),
@@ -124,7 +125,7 @@ export function DiscountView({ isOpen, onClose, id }: ProductViewProps) {
   };
 
   return (
-    <Drawer isOpen={isOpen} onClose={onClose} title="Product">
+    <Drawer isOpen={isOpen} onClose={onClose} title="Discount">
       <div className="flex flex-col gap-3 text-sm">
         <div className="flex justify-between items-start border border-gray-200 dark:border-gray-600 rounded-md p-4 text-slate-800 dark:text-slate-50">
           <div>

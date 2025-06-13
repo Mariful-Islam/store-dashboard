@@ -5,6 +5,8 @@ import Table from "../Table";
 import { OrderView } from "../order/OrderView";
 import { IoEyeOutline } from "react-icons/io5";
 import CustomerEdit from "./CustomerEdit";
+import { CiEdit } from "react-icons/ci";
+import { Tooltip } from "react-tooltip";
 
 interface CustomerViewProps {
   isOpen: boolean;
@@ -45,7 +47,6 @@ export function CustomerView({
       accessor: "id",
       render: (item: any) => <div>#{item.id}</div>,
     },
-    { label: "Retailer Name", accessor: "retailer_name" },
     { label: "Total Price", accessor: "total_price" },
     { label: "Total Quantity", accessor: "total_qty" },
     {
@@ -78,39 +79,45 @@ export function CustomerView({
   return (
     <Drawer isOpen={isOpen} onClose={onClose} title="Customer Detail">
       <div className="bg-white dark:bg-gray-800 text-slate-800 dark:text-slate-200">
-        <div className="border border-slate-300 dark:border-slate-700 p-4 rounded-md mb-4">
-          <div className="flex justify-end">
-            <button
-              className="text-blue-500 cursor-pointer hover:underline"
-              onClick={() => setCustomerEdit(customer)}
-            >
-              Edit
-            </button>
-          </div>
+        <div className="flex justify-between items-start text-sm border border-slate-300 dark:border-slate-700 p-4 rounded-md mb-4">
           <div>
             <div className="flex gap-2">
-              <div>ID: </div>
+              <strong>ID: </strong>
               <div>{customer?.id}</div>
             </div>
             <div className="flex gap-2">
-              <div>Name: </div>
+              <strong>Name: </strong>
               <div>
                 {customer?.first_name} {customer?.last_name}
               </div>
             </div>
             <div className="flex gap-2">
-              <div>UserName: </div>
+              <strong>UserName: </strong>
               <div> {customer?.username}</div>
             </div>
             <div className="flex gap-2">
-              <div>Phone: </div>
+              <strong>Phone: </strong>
               <div>{customer?.phone}</div>
             </div>
             <div className="flex gap-2">
-              <div>Email: </div>
+              <strong>Email: </strong>
               <div>{customer?.email}</div>
             </div>
           </div>
+
+          <button
+            className=" hover:text-blue-500"
+            onClick={() => setCustomerEdit(customer)}
+            data-tooltip-id={`product_edit`}
+            data-tooltip-content={"Product Edit"}
+          >
+            <CiEdit className="w-5 h-5" />
+          </button>
+          <Tooltip
+            id={`product_edit`}
+            place="left"
+            style={{ fontSize: 12, fontWeight: "bold" }}
+          />
         </div>
 
         {customer?.orders?.length !== 0 && (
@@ -129,11 +136,11 @@ export function CustomerView({
         {customerEdit && (
           <CustomerEdit
             isOpen={customerEdit ? true : false}
-            onClose={()=>setCustomerEdit(null)}
+            onClose={() => setCustomerEdit(null)}
             data={customerEdit}
-            refresh={()=>{
-              fetchCustomer()
-              refresh()
+            refresh={() => {
+              fetchCustomer();
+              refresh();
             }}
           />
         )}
