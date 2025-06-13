@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Modal from "../Modal";
 import Button from "../Button";
 import { useApi } from "../../api/api";
 import { useNavigate } from "react-router-dom";
-import { RxCross1 } from "react-icons/rx";
 import TextInput from "../TextInput";
 import { GlobalContext } from "../../contexts/GlobalContext";
 

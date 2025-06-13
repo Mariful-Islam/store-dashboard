@@ -5,6 +5,7 @@ import Modal from "../Modal";
 import { useSearchParams } from "react-router-dom";
 import Button from "../Button";
 import TextInput from "../TextInput";
+import { useToast } from "../../contexts/Notification";
 
 interface VariantSelectProps {
   isOpen: boolean;
@@ -24,12 +25,13 @@ export function EligibleDiscountProductSelect({
   const [searchParams, setSearchParams] = useSearchParams();
   const [search] = useState<string>();
   const [selectedProducts, setSelectedProducts] = useState<any[]>([]);
+  const {addToast} = useToast()
 
   const fetchProducts = (searchParams: any) => {
     api
       .getProducts(searchParams)
       .then((res) => setProds(res.data))
-      .catch(() => console.log("Error fetch products"));
+      .catch(() => addToast("Error fetch products", "error"));
   };
 
   useEffect(() => {
@@ -59,7 +61,6 @@ export function EligibleDiscountProductSelect({
     onClose();
   };
 
-  console.log(selectedProducts, prevSelectedProducts);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl">

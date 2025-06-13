@@ -15,6 +15,7 @@ export const useApi = () => {
 
         getProducts: (params={}) => interceptor.get(`${API_URL}/store/product/api/products/`, {params: params}),
         createProduct: (data:any) => interceptor.post(`${API_URL}/store/product/api/products/`, data),
+        editProduct: (slug:string, data:any) => interceptor.put(`${API_URL}/store/product/api/products/${slug}/`, data),
         getProductDetail: (slug:any) => interceptor.get(`${API_URL}/store/product/api/products/${slug}/`),
         productsWithVariants: (params={}) => interceptor.get(`${API_URL}/store/product/api/product-with-variants/`, {params: params}),
 
@@ -46,6 +47,8 @@ export const useApi = () => {
         // Discount
         getDiscounts: (params={}) => interceptor.get(`${API_URL}/store/discount/api/discounts/`, {params: params}),
         createDiscount: (data:any) => interceptor.post(`${API_URL}/store/discount/api/discounts/`, data ),
+        editDiscount: (id:any, data:any) => interceptor.put(`${API_URL}/store/discount/api/discounts/${id}/`, data),
+        
         getDiscountDetail: (id:any) => interceptor.get(`${API_URL}/store/discount/api/discounts/${id}/`),
 
         

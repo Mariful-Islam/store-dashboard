@@ -1,10 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import Table from "../components/Table";
 import { useApi } from "../api/api";
-import { CiEdit } from "react-icons/ci";
 import { IoEyeOutline } from "react-icons/io5";
 import ProductView from "../components/product/ProductView";
-import ProductEdit from "../components/product/ProductEdit";
 import Button from "../components/Button";
 import ProductCreate from "../components/product/ProductCreate";
 import Paginator from "../components/Paginator";
@@ -21,7 +19,6 @@ export default function Products() {
   const api = useApi();
   const [products, setProducts] = useState<any>();
   const [productView, setProductView] = useState<any>(null);
-  const [productEdit, setProductEdit] = useState<any>(null);
   const [productDlt, setProductDlt] = useState<any>(null);
   const [productCreate, setProductCreate] = useState<any>(null);
   const [searchParams, setSearchParams] = useSearchParams({ pages: "10" });
@@ -57,12 +54,7 @@ export default function Products() {
           >
             <IoEyeOutline className="w-5 h-5" />
           </button>
-          <button
-            className=" hover:text-blue-500"
-            onClick={() => setProductEdit("ygyug")}
-          >
-            <CiEdit className="w-5 h-5" />
-          </button>
+
           <button
             className=" hover:text-red-500"
             onClick={() => setProductDlt(item)}
@@ -168,14 +160,10 @@ export default function Products() {
           isOpen={productView ? true : false}
           onClose={() => setProductView(null)}
           slug={productView}
+          refresh={()=>fetchProducts(searchParams)}
         />
       )}
-      {productEdit && (
-        <ProductEdit
-          isOpen={productEdit ? true : false}
-          onClose={() => setProductEdit(null)}
-        />
-      )}
+
       {productCreate && (
         <ProductCreate isOpen={productCreate} onClose={onCloseProductCreate} />
       )}

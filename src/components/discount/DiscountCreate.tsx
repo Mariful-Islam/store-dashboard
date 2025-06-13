@@ -9,7 +9,7 @@ import Table from "../Table";
 import { RiDeleteBin7Line } from "react-icons/ri";
 import Select from "../Select";
 
-interface ProductCreateProps {
+interface DiscountCreateProps {
   isOpen: boolean;
   onClose: VoidFunction;
 }
@@ -17,7 +17,7 @@ interface ProductCreateProps {
 export default function DiscountCreate({
   isOpen,
   onClose,
-}: ProductCreateProps) {
+}: DiscountCreateProps) {
   const api = useApi();
   const [formData, setFormData] = useState<any>({ products: [] });
   const [loading, setLoading] = useState<boolean>(false);

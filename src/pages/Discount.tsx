@@ -64,12 +64,6 @@ function Discount() {
             <IoEyeOutline className="w-5 h-5" />
           </button>
           <button
-            className=" hover:text-blue-500"
-            onClick={() => setEdit("ygyug")}
-          > 
-            <CiEdit className="w-5 h-5" />
-          </button>
-          <button
             className=" hover:text-red-500"
             onClick={() => setDlt(item)}
           >
@@ -166,12 +160,12 @@ function Discount() {
             id={view}
           />
         )}
-        {edit && (
+        {/* {edit && (
           <DiscountEdit
             isOpen={edit ? true : false}
             onClose={() => setEdit(null)}
           />
-        )}
+        )} */}
         {create && (
           <DiscountCreate
             isOpen={create}
