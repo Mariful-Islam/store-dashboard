@@ -143,7 +143,7 @@ function SellFilterModal({ isOpen, onClose }: SellFilterModalProps) {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Sales Filter">
-      <form className="mt-6">
+      <form className="mt-6 text-[12px]">
         <div className="flex justify-end"></div>
 
         <div className="flex gap-12 justify-between mt-4">

@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
-import { API_URL } from "../api/interceptor";
-import { useApi } from "../api/api";
 import Cards from "../components/dashboard/Cards";
 
 import TopSellingProducts from "../components/dashboard/TopSellingProducts";
 import TopBuyingCustomers from "../components/dashboard/TopBuyingCustomers";
 import SellsChart from "../components/dashboard/SellsChart";
-import TopSellerRetailers from "../components/dashboard/TopSellerRetailers";
 
 
 export default function Home() {
@@ -28,7 +24,7 @@ export default function Home() {
             <TopBuyingCustomers />
           </div>
           <div className="w-full">
-            <TopSellerRetailers />
+            section
           </div>
         </div>
       </div>

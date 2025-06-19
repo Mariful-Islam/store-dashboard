@@ -24,7 +24,7 @@ const Table = ({ columns, data }: TableProps) => {
   }
 
   return (
-    <div className="bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-md text-sm overflow-auto">
+    <div className="text-[12px] bg-white dark:bg-black border border-gray-200 dark:border-gray-700 rounded-md text-sm overflow-auto">
       <table className="table-auto w-full border-collapse  ">
         <thead className="text-slate-500 dark:text-slate-200">
           <tr>

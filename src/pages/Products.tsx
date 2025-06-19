@@ -52,14 +52,14 @@ export default function Products() {
             className=" hover:text-green-500"
             onClick={() => setProductView(item.slug)}
           >
-            <IoEyeOutline className="w-5 h-5" />
+            <IoEyeOutline className="w-4 h-4" />
           </button>
 
           <button
             className=" hover:text-red-500"
             onClick={() => setProductDlt(item)}
           >
-            <MdDelete className="w-5 h-5" />
+            <MdDelete className="w-4 h-4" />
           </button>
         </div>
       ),

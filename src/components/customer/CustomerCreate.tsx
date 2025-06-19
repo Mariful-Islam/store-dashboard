@@ -41,7 +41,6 @@ export default function CustomerCreate({ isOpen, onClose, refresh }: CustomerCre
          setLoading(false);
          refresh()
          onClose()
-         navigate(`/customers`);
        })
        .catch(() => {
          console.log("Error");

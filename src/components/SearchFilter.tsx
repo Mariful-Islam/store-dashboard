@@ -44,12 +44,12 @@ function SearchFilter({ data, menuGroupsItems }: SearchFilterProps) {
 
 
   return (
-    <Wrapper style={{ gap: 12 }} className="mb-2 flex flex-col">
+    <Wrapper style={{ gap: 12 }} className="mb-2 flex flex-col text-[12px]">
       <div className="flex flex-row justify-between items-center gap-4 w-full">
         <TextInput
           id="search"
           name="search"
-          placeholder="Search orders"
+          placeholder="Search"
           value={search}
           onChange={handleSearch}
         />
@@ -59,7 +59,7 @@ function SearchFilter({ data, menuGroupsItems }: SearchFilterProps) {
           data-tooltip-id={`item-filter`}
           data-tooltip-content={"Filter"}
         >
-          <CiFilter className="w-5 min-w-5 h-5 min-h-5" />
+          <CiFilter className="w-4 min-w-4 h-4 min-h-4" />
         </Button>
 
         <Tooltip
@@ -75,7 +75,7 @@ function SearchFilter({ data, menuGroupsItems }: SearchFilterProps) {
               data-tooltip-id={`item-sort`}
               data-tooltip-content={"Sort"}
             >
-              <IoFilterOutline className="w-5 min-w-5 h-5 min-h-5" />
+              <IoFilterOutline className="w-4 min-w-4 h-4 min-h-4" />
             </div>
           }
           items={menuGroups as any}
@@ -93,7 +93,7 @@ function SearchFilter({ data, menuGroupsItems }: SearchFilterProps) {
           data-tooltip-id={`clear-filter`}
           data-tooltip-content={"Clear Filter"}
         >
-          <MdOutlineClear className="w-5 h-5" />
+          <MdOutlineClear className="w-4 min-w-4 h-4 min-h-4" />
         </Button>
 
         <Tooltip

@@ -13,8 +13,12 @@ import { fetchCustomers } from "../../redux/userSlice";
 import VariantSelect from "./VariantSelect";
 import Button from "../Button";
 import { RiDeleteBin7Line } from "react-icons/ri";
-import TextInput from "../TextInput";
 import { GlobalContext } from "../../contexts/GlobalContext";
+import { useToast } from "../../contexts/Notification";
+import AsyncSelect from "react-select/async";
+import { API_URL } from "../../api/interceptor";
+import Drawer from "../Drawer";
+import CustomerCreate from "../customer/CustomerCreate";
 
 interface OrderCreateProps {
   isOpen: boolean;
@@ -33,8 +37,12 @@ export default function OrderCreate({
   const [loading, setLoading] = useState<boolean>(false);
   const [isOpenQr, setOpenQr] = useState<boolean>(false);
   const [isPaymentOpen, setIsPaymentOpen] = useState<boolean>(false);
-  const [isOpenVariantSelect, setIsOpenVariantSelect] = useState<boolean>(false);
-  const {handleFormValidation} = useContext(GlobalContext)
+  const [isOpenVariantSelect, setIsOpenVariantSelect] =
+    useState<boolean>(false);
+  const { handleFormValidation } = useContext(GlobalContext);
+  const { addToast } = useToast();
+  const [isOpenCustomerCreate, setIsOpenCustomerCreate] =
+    useState<boolean>(false);
 
   const products: any = useSelector(
     (state: RootState) => state.products.results
@@ -87,11 +95,6 @@ export default function OrderCreate({
         return "failed";
       });
     return "";
-  };
-
-  const onChange = (e: any) => {
-    const { name, value } = e.target;
-    setFormData((prev: any) => ({ ...prev, [name]: value }));
   };
 
   const openHello = (event: any) => {
@@ -227,11 +230,12 @@ export default function OrderCreate({
       price_per_total_product: Number(item.discount_price),
     }));
 
-    const isDuplicate = qunatifyProducts.some((item1: any) =>
-      formData.variant_payload.some((item2: any) => item1.id === item2.id)
+    const newProducts = qunatifyProducts.filter(
+      (item1: any) =>
+        !formData.variant_payload.some((item2: any) => item1.id === item2.id)
     );
 
-    if (!isDuplicate) {
+    if (newProducts.length > 0) {
       const newPayload = [...formData.variant_payload, ...qunatifyProducts];
 
       const totalQty2 = newPayload.reduce(
@@ -243,7 +247,7 @@ export default function OrderCreate({
         0
       );
 
-      console.log(totalPrice2, totalQty2);
+      addToast("Products added !", "success");
 
       setTotalQTY(totalQty2);
       setTotalPrice(totalPrice2);
@@ -255,9 +259,34 @@ export default function OrderCreate({
     }
   };
 
+  console.log(customers);
+
+  useEffect(() => {
+    dispatch(fetchCustomers() as any);
+  }, [dispatch]);
+
+  const fetchCustomerOptions = async (inputValue?: any) => {
+    if (!inputValue) return [];
+    const response = await fetch(
+      `${API_URL}/store/user/api/customers/?search=${inputValue}`
+    );
+    const data = await response.json();
+
+    // Transform the response into { value, label } format
+    return data.results.map((item: any) => ({
+      value: item.username,
+      label: item.username,
+    }));
+  };
+
+  useEffect(() => {
+    fetchCustomerOptions();
+  }, []);
+
+  console.log(formData);
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Create Order">
+    <Drawer isOpen={isOpen} onClose={onClose} title="Create Order">
       <div className="flex gap-4 w-full mb-4">
         <div
           className="h-[150px] flex justify-center items-center hover:text-blue-500 w-full border border-gray-200 dark:border-gray-500 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 duration-100"
@@ -268,7 +297,6 @@ export default function OrderCreate({
         <div
           onClick={() => setIsOpenVariantSelect(!isOpenVariantSelect)}
           className=" text-6xl hover:text-blue-500 w-full border border-gray-200 rounded-md hover:bg-gray-100 dark:border-gray-500 dark:hover:bg-gray-700 duration-100 flex justify-center items-center cursor-pointer"
-          // onMouseOver={}
         >
           +
         </div>
@@ -280,7 +308,7 @@ export default function OrderCreate({
           <div className="flex gap-3 justify-end mt-2">
             <div className="flex gap-1 text-sm">
               <div className="font-medium text-slate-400">Total QTY: </div>
-              <div>{totalQTY.toFixed(2)}</div>
+              <div>{totalQTY.toFixed(0)}</div>
             </div>
             <div className="flex gap-1 text-sm">
               <div className="font-medium text-slate-400">Total Price: </div>
@@ -302,36 +330,84 @@ export default function OrderCreate({
         {formData?.variant_payload.length !== 0 && (
           <div>
             <div className="flex flex-col gap-2">
-              <label
-                htmlFor="customer_name"
-                className="text-sm font-medium text-slate-500 dark:text-slate-300"
-              >
-                Customer
-              </label>
-              <TextInput
-                id="customer_name"
-                type="text"
-                name="customer_name"
-                placeholder="customer_name"
-                value={formData?.customer_name || ''}
-                onChange={onChange}
-              />
-            </div>
+              <div className="flex justify-between items-center mt-6 mb-2">
+                <label
+                  htmlFor="customer_name"
+                  className="text-sm font-medium text-slate-500 dark:text-slate-300"
+                >
+                  Customer
+                </label>
+                <Button
+                  btntype="Normal"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpenCustomerCreate(true);
+                  }}
+                
+                  type="button"
+                >
+                  Add
+                </Button>
+              </div>
 
-            <div className="flex flex-col gap-2 mt-4">
-              <label
-                htmlFor="retailer_name"
-                className="text-sm font-medium text-slate-500 dark:text-slate-300"
-              >
-                Retailer
-              </label>
-              <TextInput
-                id="retailer_name"
-                type="text"
-                name="retailer_name"
-                placeholder="retailer_name"
-                value={formData?.retailer_name || ''}
-                onChange={onChange}
+              <AsyncSelect
+                cacheOptions
+                loadOptions={fetchCustomerOptions}
+                defaultOptions={customers?.results.map((cus: any) => ({
+                  value: cus.username,
+                  label: cus.username,
+                }))}
+                placeholder="Search..."
+                value={
+                  formData.customer_name
+                    ? {
+                        value: formData.customer_name,
+                        label: formData.customer_name,
+                      }
+                    : null
+                }
+                onChange={(value) => {
+                  setFormData((prev: any) => ({
+                    ...prev,
+                    customer_name: value ? value.value : "", // Must allow reset
+                  }));
+                }}
+                isClearable
+                styles={{
+                  control: (base) => ({
+                    ...base,
+                    minHeight: "30px", // reduce height of the input box
+                    paddingTop: "2px", // optional
+                    paddingBottom: "2px", // optional
+                  }),
+                  option: (base, state) => ({
+                    ...base,
+                    paddingTop: "4px", // adjust as needed
+                    paddingBottom: "4px",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                    backgroundColor: state.isFocused ? "#f0f0f0" : "white",
+                    color: "black",
+                  }),
+                  dropdownIndicator: (base) => ({
+                    ...base,
+                    padding: "2px", // shrink dropdown icon padding
+                  }),
+                  clearIndicator: (base) => ({
+                    ...base,
+                    padding: "2px", // shrink clear icon padding
+                  }),
+                  valueContainer: (base) => ({
+                    ...base,
+                    paddingTop: "2px",
+                    paddingBottom: "2px",
+                  }),
+                  input: (base) => ({
+                    ...base,
+                    margin: 0,
+                    padding: 0,
+                  }),
+                }}
               />
             </div>
 
@@ -339,8 +415,17 @@ export default function OrderCreate({
               <Button btntype="DangerOutline" onClick={onClose}>
                 Back
               </Button>
-              <Button btntype="Normal" onClick={onSubmit} disabled={!handleFormValidation(formData, ['customer_name', 'retailer_name', 'variant_payload'])}>
-                Create
+              <Button
+                btntype="Normal"
+                onClick={onSubmit}
+                disabled={
+                  !handleFormValidation(formData, [
+                    "customer_name",
+                    "variant_payload",
+                  ])
+                }
+              >
+                {loading ? <div className="spinner"></div> : <div>Create</div>}
               </Button>
             </div>
           </div>
@@ -359,6 +444,14 @@ export default function OrderCreate({
           refresh={refresh}
         />
       )}
-    </Modal>
+
+      {isOpenCustomerCreate && (
+        <CustomerCreate
+          isOpen={isOpenCustomerCreate}
+          onClose={() => setIsOpenCustomerCreate(false)}
+          refresh={() => fetchCustomerOptions()}
+        />
+      )}
+    </Drawer>
   );
 }

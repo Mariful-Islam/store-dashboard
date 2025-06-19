@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import {
+  Categories,
   Customers,
   Discount,
   Home,
@@ -8,7 +9,6 @@ import {
   Payment,
   Products,
   Profile,
-  Retailers,
 } from "./pages";
 import GlobalProvider from "./contexts/GlobalContext";
 import { RootLayout } from "./layouts";
@@ -44,9 +44,10 @@ function App() {
                 <Route element={<RootLayout />}>
                   <Route path="/" element={<Home />} />
                   <Route path="/products" element={<Products />} />
+                  <Route path="/products/categories" element={<Categories />} />
+                  
                   <Route path="/orders" element={<Orders />} />
                   <Route path="/customers" element={<Customers />} />
-                  <Route path="/retailers" element={<Retailers />} />
                   <Route path="/qr-code" element={<QrCode />} />
                   <Route path="/discount" element={<Discount />} />
 

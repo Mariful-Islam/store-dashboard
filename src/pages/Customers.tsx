@@ -32,8 +32,6 @@ export default function Customers() {
 
   const columns = [
     { label: "ID", accessor: "id" },
-    // { label: "Created", accessor: "created_at" },
-    // { label: "Phone", accessor: "updated_at" },
     { label: "Name", accessor: "", render: (item:any)=>(
       <div>
         {item?.first_name} {item?.last_name}
@@ -51,7 +49,7 @@ export default function Customers() {
             className=" hover:text-blue-500"
             onClick={() => setCustomerView(item?.id)}
           >
-            <IoEyeOutline className="w-5 h-5" />
+            <IoEyeOutline className="w-4 h-4" />
           </button>
         </div>
       ),

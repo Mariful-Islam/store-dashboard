@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiOutlineProduct } from "react-icons/ai";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { MdOutlineSell } from "react-icons/md";
+import { MdOutlineAttachMoney, MdOutlineSell } from "react-icons/md";
 import { TbBuildingWarehouse } from "react-icons/tb";
 import { API_URL } from "../../api/interceptor";
 import { useApi } from "../../api/api";
@@ -56,9 +56,9 @@ export default function Cards() {
       value: data?.total_orders,
     },
     {
-      label: "Product",
-      icon: <AiOutlineProduct className="text-blue-500 dark:text-blue-100" />,
-      value: data?.total_variant,
+      label: "Sales",
+      icon: <MdOutlineAttachMoney className="text-blue-500 dark:text-blue-100" />,
+      value: data?.total_sales,
     },
     {
       label: "Customer",

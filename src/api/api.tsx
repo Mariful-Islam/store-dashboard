@@ -19,6 +19,19 @@ export const useApi = () => {
         getProductDetail: (slug:any) => interceptor.get(`${API_URL}/store/product/api/products/${slug}/`),
         productsWithVariants: (params={}) => interceptor.get(`${API_URL}/store/product/api/product-with-variants/`, {params: params}),
 
+
+        // categories
+        getCategories: (params={}) => interceptor.get(`${API_URL}/store/category/api/category-list/`, {params: params}),
+        createCategory: (data:any) => interceptor.post(`${API_URL}/store/category/api/category/`, data),
+        createSubCategory: (data:any) => interceptor.post(`${API_URL}/store/category/api/sub-category/`, data),
+        createSubSubCategory: (data:any) => interceptor.post(`${API_URL}/store/category/api/sub-sub-category/`, data),
+        
+        editCategory: (data:any, id:number) => interceptor.put(`${API_URL}/store/category/api/category/${id}/`, data),
+        editSubCategory: (data:any, id:number) => interceptor.put(`${API_URL}/store/category/api/sub-category/${id}/`, data),
+        editSubSubCategory: (data:any, id:number) => interceptor.put(`${API_URL}/store/category/api/sub-sub-category/${id}/`, data),
+        
+
+
         getCustomers: (params={}) => interceptor.get(`${API_URL}/store/user/api/customers/`, {params: params}),
         createCustomers: (data:any) => interceptor.post(`${API_URL}/store/user/api/customers/`, data),
         getCustomerDetail: (id:number) => interceptor.get(`${API_URL}/store/user/api/customers/${id}/`),

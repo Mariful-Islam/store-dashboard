@@ -41,7 +41,7 @@ export default function DeleteConsent({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Consent" size="sm">
+    <Modal isOpen={isOpen} onClose={onClose} title="Delete" size="sm">
       <div className="h-[300px] flex flex-col gap-8 justify-center items-center">
         <h1 className="text-2xl font-bold">Are you delete <span className="text-red-500">{item?.name}</span> {name} ?</h1>
         <MdDelete  className="w-10 h-10 text-red-500"/>

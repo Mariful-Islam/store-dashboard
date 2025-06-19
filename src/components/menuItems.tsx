@@ -5,6 +5,7 @@ import { CiDiscount1 } from "react-icons/ci";
 import { GoHome } from "react-icons/go";
 import { IoIosPeople } from "react-icons/io";
 import { IoQrCodeOutline } from "react-icons/io5";
+import { MdOutlineCategory } from "react-icons/md";
 import { RiUserLine } from "react-icons/ri";
 
 
@@ -27,7 +28,14 @@ const useMenuItems = () => {
       name: "Products",
       icon: <AiOutlineProduct className="w-5 h-5" />,
       // count: 12,
-      url: "/products"
+      url: "/products",
+      subMenu: [
+        {
+          name: 'Category',
+          icon: <MdOutlineCategory className="w-5 h-5"/>,
+          url: '/products/categories',
+        }
+      ]
     },
     {
       name: "Orders",
@@ -38,11 +46,6 @@ const useMenuItems = () => {
       name: "Customers",
       url: "/customers",
       icon: <IoIosPeople className="w-5 h-5" />,
-    },
-    {
-      name: "Retailers",
-      url: "/retailers",
-      icon: <RiUserLine className="w-5 h-5"/>,
     },
     {
       name: "Qr Code",

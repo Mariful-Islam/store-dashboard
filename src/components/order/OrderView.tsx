@@ -147,13 +147,13 @@ export function OrderView({ isOpen, onClose, id, refresh }: ProductViewProps) {
         <h1 className="font-black text-slate-500 dark:text-slate-300 mt-4">
           Order info
         </h1>
-        <div className="border border-slate-300 dark:border-slate-600 p-4 rounded-md mt-2">
+        <div className="text-[12px] border border-slate-300 dark:border-slate-600 p-3 rounded-md mt-2">
           <div className="flex gap-2">
-            <div>ID: </div>
+            <div className="font-bold">ID: </div>
             <div>{order?.id}</div>
           </div>
           <div className="flex gap-2">
-            <div>Ordered Time: </div>
+            <div className="font-bold">Ordered Time: </div>
             <div>
               {/* {moment(order?.created_at).format("HH:MM A DD MMMM YYYY")} */}
               {/* {order?.created_at} */}
@@ -161,7 +161,7 @@ export function OrderView({ isOpen, onClose, id, refresh }: ProductViewProps) {
             </div>
           </div>
           <div className="flex gap-2">
-            <div>Total Price: </div>
+            <div className="font-bold">Total Price: </div>
             <div>{order?.total_price}</div>
           </div>
         </div>
@@ -169,11 +169,11 @@ export function OrderView({ isOpen, onClose, id, refresh }: ProductViewProps) {
         <h1 className="mt-4 font-black text-slate-500 dark:text-slate-300">
           Ordered Items
         </h1>
-        <div className="border border-slate-300 dark:border-slate-600 p-4 rounded-md mt-2">
+        <div className="rounded-md mt-2 flex flex-col gap-2">
           {order?.variants?.map((item: any, index: number) => (
             <div
               key={index}
-              className="border-b border-slate-300 dark:border-slate-700 pb-2 m-2"
+              className="text-[12px] border border-slate-300 dark:border-slate-600 p-3 rounded-md"
             >
               <div className="flex gap-2">
                 <div className="font-bold">ID: </div>
@@ -203,58 +203,31 @@ export function OrderView({ isOpen, onClose, id, refresh }: ProductViewProps) {
         <h1 className="mt-4 font-black text-slate-500 dark:text-slate-300">
           Customer
         </h1>
-        <div className="border border-slate-300 dark:border-slate-600 p-4 rounded-md mt-2">
+        <div className="text-[12px] border border-slate-300 dark:border-slate-600 p-3 rounded-md mt-2">
           <div className="flex gap-2">
-            <div>ID: </div>
+            <div className="font-bold">ID: </div>
             <div>{order?.id}</div>
           </div>
           <div className="flex gap-2">
-            <div>Name: </div>
+            <div className="font-bold">Name: </div>
             <div>
               {order?.customer.first_name} {order?.customer.last_name}
             </div>
           </div>
           <div className="flex gap-2">
-            <div>Username: </div>
+            <div className="font-bold">Username: </div>
             <div>{order?.customer.username}</div>
           </div>
           <div className="flex gap-2">
-            <div>Email: </div>
+            <div className="font-bold">Email: </div>
             <div>{order?.customer.email}</div>
           </div>
           <div className="flex gap-2">
-            <div>Phone: </div>
+            <div className="font-bold">Phone: </div>
             <div>{order?.customer.phone}</div>
           </div>
         </div>
 
-        <h1 className="mt-4 font-black text-slate-500 dark:text-slate-300">
-          Retailer
-        </h1>
-        <div className="border border-slate-300 dark:border-slate-600 p-4 rounded-md mt-2">
-          <div className="flex gap-2">
-            <div>ID: </div>
-            <div>{order?.retailer.id}</div>
-          </div>
-          <div className="flex gap-2">
-            <div>Name: </div>
-            <div>
-              {order?.retailer.first_name} {order?.retailer.last_name}
-            </div>
-          </div>
-          <div className="flex gap-2">
-            <div>Username: </div>
-            <div>{order?.retailer.username}</div>
-          </div>
-          <div className="flex gap-2">
-            <div>Email: </div>
-            <div>{order?.retailer.email}</div>
-          </div>
-          <div className="flex gap-2">
-            <div>Phone: </div>
-            <div>{order?.retailer.phone}</div>
-          </div>
-        </div>
 
         {order && <Invoice data={order} ref={contentRef} />}
         {paymentModal && (

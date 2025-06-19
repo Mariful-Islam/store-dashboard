@@ -59,33 +59,7 @@ function Invoice({ data, ref }: InvoiceProps) {
     <div ref={ref} className="p-8 hidden print:block">
       <h1 className="text-3xl">Store</h1>
       <div className="flex justify-between mt-6 gap-12">
-        <div>
-          <h1 className="border-b">Retailer</h1>
-          <div className="mt-1">
-            <table>
-              <tbody>
-                <tr>
-                  <td className="font-bold text-gray-500 pr-2">Name </td>
-                  <td className="text-gray-500">
-                    {data?.retailer.first_name} {data?.retailer.last_name}
-                  </td>
-                </tr>
-                <tr>
-                  <td className="font-bold text-gray-500 pr-2">Phone </td>
-                  <td className="text-gray-500">{data?.retailer.phone}</td>
-                </tr>
-                <tr>
-                  <td className="font-bold text-gray-500 pr-2">Email </td>
-                  <td className="text-gray-500">{data?.retailer.email}</td>
-                </tr>
-                <tr>
-                  <td className="font-bold text-gray-500 pr-2">Address </td>
-                  <td className="text-gray-500"> {data?.retailer.address}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+
         <div>
           <h1 className="border-b">Customer</h1>
           <div className="mt-1">

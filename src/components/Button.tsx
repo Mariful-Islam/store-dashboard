@@ -7,7 +7,8 @@ interface StoreButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     | "Danger"
     | "DangerOutline"
     | "Warning"
-    | "white-btn";
+    | "white-btn"
+    | "circle";
 }
 
 function Button(rest: StoreButtonProps) {
@@ -43,7 +44,14 @@ function Button(rest: StoreButtonProps) {
               rest.btntype === "white-btn" &&
               `border border-gray-200 dark:border-gray-700 p-[6px] rounded-md bg-gray-100 dark:bg-gray-700 hover:bg-white dark:hover:bg-black duration-150`
             }
+                ${
+                  rest.btntype === "circle" &&
+                  `border border-gray-200 dark:border-gray-700 h-6 w-6 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-white dark:hover:bg-black duration-150`
+                }
+
             ${rest.className}
+
+            cursor-pointer
           
         `}
     >

@@ -59,13 +59,13 @@ function Discount() {
             className=" hover:text-green-500"
             onClick={() => setView(item?.id)}
           >
-            <IoEyeOutline className="w-5 h-5" />
+            <IoEyeOutline className="w-4 h-4" />
           </button>
           <button
             className=" hover:text-red-500"
             onClick={() => setDlt(item)}
           >
-            <MdDelete className="w-5 h-5" />
+            <MdDelete className="w-4 h-4" />
           </button>
         </div>
       ),
